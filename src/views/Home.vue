@@ -1,18 +1,34 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Header />
+    <body>
+      <div>
+        <PopularStarships />
+      </div>
+    </body>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import { reactive, toRefs } from "vue";
+import Header from "../components/Header.vue";
+import PopularStarships from "../components/Home/PopularStarships.vue";
 
 export default {
-  name: "Home",
   components: {
-    HelloWorld,
+    Header,
+    PopularStarships,
+  },
+  setup() {
+    const data = reactive({
+      search: "",
+    });
+
+    return {
+      ...toRefs(data),
+    };
   },
 };
 </script>
+
+<style lang="scss" scoped></style>
