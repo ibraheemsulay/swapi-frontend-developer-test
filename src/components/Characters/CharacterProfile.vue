@@ -1,6 +1,6 @@
 <template>
   <div class="list-item characters grid left">
-    <div class="list-item__image">
+    <div v-show="display === 'grid'" class="list-item__image">
       <img :src="imageLink" :alt="name" />
     </div>
     <div class="list-item__body">
@@ -19,7 +19,7 @@
 import { reactive, toRefs } from "vue";
 
 export default {
-  props: ["imageLink", "name", "birthyear", "gender"],
+  props: ["imageLink", "name", "birthyear", "gender", "display"],
 
   setup(props) {
     const data = reactive({
@@ -104,6 +104,9 @@ export default {
       color: #494857;
       font-weight: 500;
       margin-left: 0.5rem;
+    }
+    a:-webkit-any-link {
+      color: #494857;
     }
   }
 

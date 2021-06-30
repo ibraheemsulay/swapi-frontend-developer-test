@@ -1,20 +1,37 @@
 <template>
   <section class="section">
-    <h2 class="section__title">Popular Characters</h2>
+    <h2 class="section__title">All Characters</h2>
+    <div class="filters">
+      <label for="gender">
+        FILTER
+        <select id="gender" v-model="gender">
+          <option value="allGender" selected>All Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="hermaphrodite">Hermaphrodite</option>
+        </select>
+      </label>
+      <label for="display">
+        DISPLAY
+        <select id="display" v-model="display">
+          <option value="grid" selected>Grid</option>
+          <option value="list">List</option>
+        </select>
+      </label>
+    </div>
     <div class="section__body">
-      <div v-if="characters.length < 1" class="no-result">No Result Found</div>
       <CharacterProfile
         v-for="character in characters"
         :key="character.name"
-        :imageLink="imageLink[Math.floor(Math.random() * 2)]"
+        :imageLink="imageLink[Math.floor(Math.random() * 4)]"
         :name="character.name"
         :birthyear="character.birth_year"
         :gender="character.gender"
-        display="grid"
+        :display="display"
       />
     </div>
     <div class="section__button">
-      <router-link :to="{ name: 'AllCharacters' }">
+      <router-link to="/starships">
         <button type="button">View All</button>
       </router-link>
     </div>
@@ -24,7 +41,7 @@
 <script>
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
-import CharacterProfile from "../Characters/CharacterProfile.vue";
+import CharacterProfile from "../components/Characters/CharacterProfile.vue";
 
 export default {
   components: {
@@ -33,7 +50,19 @@ export default {
   setup() {
     const store = useStore();
     const data = reactive({
-      characters: computed(() => store.getters.popularCharacters),
+      gender: "allGender",
+      display: "grid",
+      characters: computed(() =>
+        store.getters.allCharacters
+          .map((character) => {
+            if (character.gender === data.gender) {
+              return character;
+            } else if (data.gender === "allGender") {
+              return character;
+            }
+          })
+          .filter((character) => character !== undefined)
+      ),
       imageLink: computed(() => store.state.images.characters),
     });
 
@@ -65,18 +94,31 @@ export default {
     }
   }
 
+  .filters {
+    display: flex;
+    justify-content: start;
+    margin: 3em auto 5em auto;
+    label {
+      margin: 0 auto;
+      select {
+        margin-left: 1em;
+        padding: 0.5em 0.5em 0.5em 0.2em;
+        border-radius: 4px;
+        border: 2px solid;
+        background: #fff;
+        &:hover {
+          background: #cfcccc56;
+        }
+      }
+    }
+  }
+
   &__body {
     margin-top: 2rem;
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
-
-    .no-result {
-      margin: 1.5em;
-      font-size: 1.5em;
-      text-transform: capitalize;
-    }
   }
 
   &__button {

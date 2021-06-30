@@ -9,16 +9,42 @@ export default createStore({
     planets: [],
     starships: [],
     images,
+    searchValue: " ",
   },
 
   //GETTERS
   getters: {
-    popularStarships: (state) => state.starships.slice(0, 6),
-    popularPlanets: (state) => state.planets.slice(0, 9),
-    popularCharacters: (state) => state.characters.slice(0, 4),
-    allStarships: (state) => state.starships,
-    allPlanets: (state) => state.planets,
-    allCharacters: (state) => state.characters,
+    popularStarships: (state) =>
+      state.starships
+        .filter((starship) =>
+          starship.name.toLowerCase().includes(state.searchValue.toLowerCase())
+        )
+        .slice(0, 6),
+    popularPlanets: (state) =>
+      state.planets
+        .filter((planet) =>
+          planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
+        )
+        .slice(0, 9),
+    popularCharacters: (state) =>
+      state.characters
+        .filter((character) =>
+          character.name.toLowerCase().includes(state.searchValue.toLowerCase())
+        )
+        .slice(0, 4),
+    allStarships: (state) =>
+      state.starships.filter((starship) =>
+        starship.name.toLowerCase().includes(state.searchValue.toLowerCase())
+      ),
+    allPlanets: (state) =>
+      state.planets.filter((planet) =>
+        planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
+      ),
+    allCharacters: (state) =>
+      state.characters.filter((character) =>
+        character.name.toLowerCase().includes(state.searchValue.toLowerCase())
+      ),
+    searchValue: (state) => state.searchValue,
   },
 
   //ACTIONS
@@ -42,6 +68,10 @@ export default createStore({
         commit("setHasFetched", false);
       }
     },
+    filter: ({ commit }, { value }) => {
+      console.log(value);
+      commit("setSearchValue", value);
+    },
   },
 
   //MUTATIONS
@@ -52,5 +82,6 @@ export default createStore({
     setPlanets: (state, val) => (state.planets = [...state.planets, ...val]),
     setStarShips: (state, val) =>
       (state.starships = [...state.starships, ...val]),
+    setSearchValue: (state, val) => (state.searchValue = val),
   },
 });

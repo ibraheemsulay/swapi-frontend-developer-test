@@ -2,6 +2,7 @@
   <section class="section">
     <h2 class="section__title">Popular Planets</h2>
     <div class="section__body">
+      <div v-if="planets.length < 1" class="no-result">No Result Found</div>
       <PlanetCard
         v-for="planet in planets"
         :key="planet.name"
@@ -59,9 +60,15 @@ export default {
   &__body {
     margin-top: 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
+
+    .no-result {
+      margin: 1.5em;
+      font-size: 1.5em;
+      text-transform: capitalize;
+    }
   }
 
   &__button {

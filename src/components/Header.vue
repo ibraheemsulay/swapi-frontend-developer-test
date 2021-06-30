@@ -18,6 +18,7 @@
             type="text"
             placeholder="Enter a search item"
             class="searchbar__input"
+            v-model="search"
           />
           <div class="searchbar__icon">
             <img src="@/assets/Images/search.svg" alt="search bar icon" />
@@ -29,20 +30,25 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { Search } from "material-design-icons";
 
 export default {
-  component: {
-    Search,
-  },
+  component: {},
   setup() {
     const store = useStore();
     const data = reactive({
+      search: "",
       heroBanner: computed(() => store.state.images.heroBanner),
       logo: computed(() => store.state.images.logo),
     });
+
+    watch(
+      () => data.search,
+      (search) => {
+        store.dispatch("filter", { value: search });
+      }
+    );
 
     return {
       ...toRefs(data),
@@ -169,6 +175,8 @@ export default {
 
 .searchbar {
   position: relative;
+  margin-top: 2em;
+  width: 90%;
 
   &__input {
     font-size: 1.35rem;
