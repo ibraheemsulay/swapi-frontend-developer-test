@@ -1,5 +1,6 @@
 <template>
   <div v-if="hasFetched">
+    <Header />
     <router-view />
   </div>
   <div v-else class="loader">loading</div>
@@ -8,8 +9,12 @@
 <script>
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
+import Header from "./components/Header.vue";
 
 export default {
+  components: {
+    Header,
+  },
   setup() {
     const store = useStore();
     const data = reactive({

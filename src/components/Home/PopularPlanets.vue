@@ -1,20 +1,15 @@
 <template>
   <section class="section">
-    <h2 class="section__title">Popular Starships</h2>
+    <h2 class="section__title">Popular Planets</h2>
     <div class="section__body">
-      <StarshipCard
-        v-for="starship in starships"
-        :key="starship.name"
-        :imageLink="imageLink[Math.floor(Math.random() * 5)]"
-        :name="starship.name"
-        :cargo="starship.cargo_capacity"
-        :model="starship.model"
+      <PlanetCard
+        v-for="planet in planets"
+        :key="planet.name"
+        :imageLink="imageLink[Math.floor(Math.random() * 3)]"
+        :name="planet.name"
+        :temperature="planet.temperature"
+        :population="planet.population"
       />
-    </div>
-    <div class="section__button">
-      <router-link :to="{ name: 'AllStarships' }">
-        <button type="button">View All</button>
-      </router-link>
     </div>
   </section>
 </template>
@@ -22,17 +17,15 @@
 <script>
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
-import StarshipCard from "../Starships/StarshipCard.vue";
+import PlanetCard from "../Planets/PlanetCard.vue";
 
 export default {
-  components: {
-    StarshipCard,
-  },
+  components: { PlanetCard },
   setup() {
     const store = useStore();
     const data = reactive({
-      starships: computed(() => store.getters.popularStarships),
-      imageLink: computed(() => store.state.images.starships),
+      planets: computed(() => store.getters.popularPlanets),
+      imageLink: computed(() => store.state.images.planets),
     });
 
     return {

@@ -14,11 +14,16 @@ export default createStore({
   //GETTERS
   getters: {
     popularStarships: (state) => state.starships.slice(0, 6),
+    popularPlanets: (state) => state.planets.slice(0, 9),
+    popularCharacters: (state) => state.characters.slice(0, 4),
+    allStarships: (state) => state.starships,
+    allPlanets: (state) => state.planets,
+    allCharacters: (state) => state.characters,
   },
 
   //ACTIONS
   actions: {
-    fetchData: async ({ state, commit, dispatch }, { url, commitState }) => {
+    fetchData: async ({ commit, dispatch }, { url, commitState }) => {
       try {
         const response = await axios
           .get(url, {
@@ -36,7 +41,6 @@ export default createStore({
         console.log(error);
         commit("setHasFetched", false);
       }
-      console.log(state.starships);
     },
   },
 

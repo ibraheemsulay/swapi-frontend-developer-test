@@ -1,9 +1,9 @@
 <template>
   <section class="section">
-    <h2 class="section__title">Popular Starships</h2>
+    <h2 class="section__title">All Starships</h2>
     <div class="section__body">
       <StarshipCard
-        v-for="starship in starships"
+        v-for="starship in allStarships"
         :key="starship.name"
         :imageLink="imageLink[Math.floor(Math.random() * 5)]"
         :name="starship.name"
@@ -12,7 +12,7 @@
       />
     </div>
     <div class="section__button">
-      <router-link :to="{ name: 'AllStarships' }">
+      <router-link to="/starships">
         <button type="button">View All</button>
       </router-link>
     </div>
@@ -22,7 +22,7 @@
 <script>
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
-import StarshipCard from "../Starships/StarshipCard.vue";
+import StarshipCard from "../components/Starships/StarshipCard.vue";
 
 export default {
   components: {
@@ -31,7 +31,7 @@ export default {
   setup() {
     const store = useStore();
     const data = reactive({
-      starships: computed(() => store.getters.popularStarships),
+      allStarships: computed(() => store.getters.allStarships),
       imageLink: computed(() => store.state.images.starships),
     });
 

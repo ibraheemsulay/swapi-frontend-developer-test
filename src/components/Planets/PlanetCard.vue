@@ -23,12 +23,11 @@
 import { reactive, toRefs } from "vue";
 
 export default {
-  props: ["imageLink", "name", "birthyear", "gender"],
+  props: ["imageLink", "name", "temperature", "population"],
 
   setup(props) {
     const data = reactive({
-      characterDescription: `was born in the year ${props.birthyear}, and is a
-      ${props.gender}`,
+      characterDescription: `${props.name} has a temperature of ${props.temperature}, and a population of ${props.population}`,
     });
 
     return {

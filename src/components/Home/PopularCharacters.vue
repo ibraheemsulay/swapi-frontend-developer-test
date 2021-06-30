@@ -1,20 +1,38 @@
 <template>
   <section class="section">
-    <h2 class="section__title"></h2>
-    <div class="section__body"></div>
+    <h2 class="section__title">Popular Characters</h2>
+    <div class="section__body">
+      <CharacterProfile
+        v-for="character in characters"
+        :key="character.name"
+        :imageLink="imageLink[Math.floor(Math.random() * 2)]"
+        :name="character.name"
+        :birthyear="character.birth_year"
+        :gender="character.gender"
+      />
+    </div>
+    <div class="section__button">
+      <router-link to="/starships">
+        <button type="button">View All</button>
+      </router-link>
+    </div>
   </section>
 </template>
 
 <script>
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
+import CharacterProfile from "../Characters/CharacterProfile.vue";
 
 export default {
+  components: {
+    CharacterProfile,
+  },
   setup() {
     const store = useStore();
     const data = reactive({
-      starships: computed(() => store.getters.popularStarships),
-      images: computed(() => store.state.images.starships),
+      characters: computed(() => store.getters.popularCharacters),
+      imageLink: computed(() => store.state.images.characters),
     });
 
     return {

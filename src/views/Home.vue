@@ -1,9 +1,10 @@
 <template>
   <div class="home">
-    <Header />
     <body>
       <div>
         <PopularStarships />
+        <PopularPlanets />
+        <PopularCharacters />
       </div>
     </body>
   </div>
@@ -11,13 +12,16 @@
 
 <script>
 import { reactive, toRefs } from "vue";
-import Header from "../components/Header.vue";
+
 import PopularStarships from "../components/Home/PopularStarships.vue";
+import PopularPlanets from "../components/Home/PopularPlanets.vue";
+import PopularCharacters from "../components/Home/PopularCharacters.vue";
 
 export default {
   components: {
-    Header,
     PopularStarships,
+    PopularPlanets,
+    PopularCharacters,
   },
   setup() {
     const data = reactive({
