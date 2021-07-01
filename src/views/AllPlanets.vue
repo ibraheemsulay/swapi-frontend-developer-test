@@ -1,19 +1,28 @@
 <template>
   <section class="section">
-    <h2 class="section__title">Popular Planets</h2>
+    <h2 class="section__title">All Planets</h2>
+    <div class="filters">
+      <label for="display">
+        DISPLAY
+        <select id="display" v-model="display">
+          <option value="grid" selected>Grid</option>
+          <option value="list">List</option>
+        </select>
+      </label>
+    </div>
     <div class="section__body">
-      <div v-if="planets.length < 1" class="no-result">No Result Found</div>
-      <PlanetCard
+      <PlanetProfile
         v-for="planet in planets"
         :key="planet.name"
         :imageLink="imageLink[Math.floor(Math.random() * 3)]"
         :name="planet.name"
         :temperature="planet.temperature"
         :population="planet.population"
+        :display="display"
       />
     </div>
     <div class="section__button">
-      <router-link :to="{ name: 'AllPlanets' }">
+      <router-link to="/starships">
         <button type="button">View All</button>
       </router-link>
     </div>
@@ -23,14 +32,17 @@
 <script>
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
-import PlanetCard from "../Planets/PlanetCard.vue";
+import PlanetProfile from "../components/Planets/PlanetProfile.vue";
 
 export default {
-  components: { PlanetCard },
+  components: {
+    PlanetProfile,
+  },
   setup() {
     const store = useStore();
     const data = reactive({
-      planets: computed(() => store.getters.popularPlanets),
+      display: "grid",
+      planets: computed(() => store.getters.allPlanets),
       imageLink: computed(() => store.state.images.planets),
     });
 
@@ -62,18 +74,31 @@ export default {
     }
   }
 
+  .filters {
+    display: flex;
+    justify-content: start;
+    margin: 3em auto 5em auto;
+    label {
+      margin: 0 auto;
+      select {
+        margin-left: 1em;
+        padding: 0.5em 0.5em 0.5em 0.2em;
+        border-radius: 4px;
+        border: 2px solid;
+        background: #fff;
+        &:hover {
+          background: #cfcccc56;
+        }
+      }
+    }
+  }
+
   &__body {
     margin-top: 2rem;
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
-
-    .no-result {
-      margin: 1.5em;
-      font-size: 1.5em;
-      text-transform: capitalize;
-    }
   }
 
   &__button {

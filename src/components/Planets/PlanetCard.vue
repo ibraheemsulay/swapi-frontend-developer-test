@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item starship grid top">
+  <div class="list-item planet grid top">
     <div class="list-item__image">
       <img :src="imageLink" :alt="name" />
     </div>

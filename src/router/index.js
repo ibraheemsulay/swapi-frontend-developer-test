@@ -17,6 +17,11 @@ const routes = [
     name: "AllCharacters",
     component: () => import("../views/AllCharacters.vue"),
   },
+  {
+    path: "/planets",
+    name: "AllPlanets",
+    component: () => import("../views/AllPlanets.vue"),
+  },
 ];
 
 const router = createRouter({
