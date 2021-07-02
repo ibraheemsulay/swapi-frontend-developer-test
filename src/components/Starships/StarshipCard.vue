@@ -10,8 +10,14 @@
       <p class="list-item__description">
         {{ name.split(" ")[0] }} {{ characterDescription }}
       </p>
-      <router-link to="/" class="list-item__button">
-        <button type="button">
+      <router-link
+        :to="{
+          name: 'Description',
+          params: { category: 'starships', name: name },
+        }"
+        class="list-item__button"
+      >
+        <button @click="resetSearchBar">
           Read more <img src="@/assets/Images/right-arrow.svg" alt="arrow" />
         </button>
       </router-link>
@@ -21,17 +27,24 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import { useStore } from "vuex";
 
 export default {
   props: ["imageLink", "name", "model", "cargo"],
 
   setup(props) {
+    const store = useStore();
     const data = reactive({
       characterDescription: `is of the ${props.model} model, and has a cargo of ${props.cargo}`,
     });
 
+    const resetSearchBar = () => {
+      store.commit("setSearchValue", " ");
+    };
+
     return {
       ...toRefs(data),
+      resetSearchBar,
     };
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div v-if="hasFetched">
-    <Header />
+    <Header v-if="!$route.meta.hideHeader" />
     <router-view />
   </div>
   <div v-else class="loader">loading</div>

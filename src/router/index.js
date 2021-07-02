@@ -22,14 +22,20 @@ const routes = [
     name: "AllPlanets",
     component: () => import("../views/AllPlanets.vue"),
   },
+  {
+    path: "/description/:category/:name",
+    name: "Description",
+    component: () => import("../views/Description.vue"),
+    meta: {
+      hideHeader: true,
+    },
+    props: true,
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  scrollBehavior() {
-    return { x: 0, y: 0 };
-  },
 });
 
 export default router;

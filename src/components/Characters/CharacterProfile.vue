@@ -9,26 +9,41 @@
       </div>
       <p class="list-item__description">
         {{ name.split(" ")[0] }} {{ characterDescription }}
-        <router-link to="/">Read more</router-link>
+        <router-link
+          @click="resetSearchBar"
+          :to="{
+            name: 'Description',
+            params: { category: 'characters', name: name },
+          }"
+          >Read more</router-link
+        >
       </p>
     </div>
   </div>
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, computed } from "vue";
+import { useStore } from "vuex";
 
 export default {
   props: ["imageLink", "name", "birthyear", "gender", "display"],
 
   setup(props) {
+    const store = useStore();
     const data = reactive({
       characterDescription: `was born in the year ${props.birthyear}, and is a
       ${props.gender === "n/a" ? "robot" : props.gender}`,
+      allCharacters: computed(() => store.getters.allCharacters),
     });
+
+    const resetSearchBar = () => {
+      store.commit("setSearchValue", " ");
+    };
 
     return {
       ...toRefs(data),
+      resetSearchBar,
     };
   },
 };

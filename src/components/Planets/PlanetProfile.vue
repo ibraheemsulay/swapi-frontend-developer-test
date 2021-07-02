@@ -9,7 +9,14 @@
       </div>
       <p class="list-item__description">
         {{ name.split(" ")[0] }} {{ characterDescription }}
-        <router-link to="/">Read more</router-link>
+        <router-link
+          @click="resetSearchBar"
+          :to="{
+            name: 'Description',
+            params: { category: 'planets', name: name },
+          }"
+          >Read more</router-link
+        >
       </p>
     </div>
   </div>
@@ -17,17 +24,24 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import { useStore } from "vuex";
 
 export default {
   props: ["imageLink", "name", "temperature", "population", "display"],
 
   setup(props) {
+    const store = useStore();
     const data = reactive({
       characterDescription: `${props.name} has a temperature of ${props.temperature}, and a population of ${props.population}`,
     });
 
+    const resetSearchBar = () => {
+      store.commit("setSearchValue", " ");
+    };
+
     return {
       ...toRefs(data),
+      resetSearchBar,
     };
   },
 };
