@@ -10,18 +10,79 @@
           <img :src="imageLink" :alt="category" />
         </div>
         <div class="description__title">
-          <h1>{{ name }} this is the {{ category }}</h1>
-        </div>
-        <div class="description__slider">
-          <button @click="navigatePrevious">
-            <img src="@/assets/Images/chevron-left.svg" alt="previous icon" />
-          </button>
-          <button @click="navigateNext">
-            <img src="@/assets/Images/chevron-right.svg" alt="next icon" />
-          </button>
+          <div class="item__name">
+            <div class="bracket__left"></div>
+            <h1>{{ name }}</h1>
+            <div class="bracket__right"></div>
+          </div>
+
+          <div class="description__slider">
+            <button @click="navigatePrevious">
+              <img
+                src="@/assets/Images/arrow_left_white_24dp.svg"
+                alt="previous icon"
+              />
+            </button>
+            <button @click="navigateNext">
+              <img
+                src="@/assets/Images/arrow_right_white_24dp.svg"
+                alt="next icon"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </header>
+    <section class="section">
+      <h2 class="section__title">{{ name }} Details</h2>
+      <div class="section__body">
+        <p v-if="category === 'starships'">
+          {{ item[0].name }} is of the {{ item[0].model }} model and was
+          manufactured by {{ item[0].manufacturer }}. It costs
+          {{ item[0].cost_in_credits }} credits. It has a length of
+          {{ item[0].length }}, maximum atmosphering speed of 950, crew capacity
+          of {{ item[0].crew }}, and cargo capacity of
+          {{ item[0].cargo_capacity }}. It has
+          {{ item[0].passengers }}
+          passengers. It has {{ item[0].consumables }} consumables,
+          {{ item[0].hyperdrive_rating }} hyperdrive rating,
+          {{ item[0].MGLT }} MGLT, and starship class of
+          {{ item[0].starship_class }}.
+        </p>
+        <p v-if="category === 'planets'">
+          {{ item[0].name }} has a rotation period of
+          {{ item[0].rotation_period }}, and has a diamater of
+          {{ item[0].diameter }}. It has an orbital period of
+          {{ item[0].orbital_period }}, {{ item[0].climate }} climate, gravity
+          of {{ item[0].gravity }}, and has {{ item[0].terrain }} terrain. The
+          population of Tatooine is {{ item[0].population }}, and has a surface
+          water of {{ item[0].surface_water }}.
+        </p>
+        <p v-if="category === 'characters'">
+          {{ item[0].name }} is a
+          {{ item[0].gender == "n/a" ? "robot" : item[0].gender }}, and is
+          {{ item[0].height }} tall.
+          {{
+            item[0].gender === "male"
+              ? "He"
+              : item[0].gender === "female"
+              ? "She"
+              : "It"
+          }}
+          has a mass of {{ item[0].mass }},
+          {{ item[0].hair_color == "n/a" ? "no" : item[0].hair_color }} hair
+          color, {{ item[0].eye_color }} eye color,
+          {{ item[0].skin_color }} skin color, and was born in the year
+          {{ item[0].birth_year }}.
+        </p>
+      </div>
+      <div class="recently-viewed">
+        <h2 class="recently-viewed__title">Recently Viewed</h2>
+      </div>
+    </section>
+    <div class="recently-viewed__button">
+      <button type="button">Return Home</button>
+    </div>
   </div>
 </template>
 
@@ -41,7 +102,7 @@ export default {
       counter: 0,
       heroBanner: computed(() => store.state.images.heroBanner),
       logo: computed(() => store.state.images.logo),
-      character: computed(() =>
+      item: computed(() =>
         store.state[`${props.category}`].filter(
           (item) => item.name == props.name
         )
@@ -70,6 +131,7 @@ export default {
     };
 
     const navigatePrevious = () => {
+      console.log(data.item);
       data.imageLink =
         data.images[Math.floor(Math.random() * data.images.length)];
       if (data.counter < 0) data.counter = data.allCharacters.length - 1;
@@ -148,7 +210,7 @@ export default {
     .img__container {
       margin-right: auto;
       margin-left: auto;
-      width: 50%;
+      width: 40%;
       height: 50%;
       overflow: hidden;
       img {
@@ -156,24 +218,69 @@ export default {
         height: 300px;
         object-fit: fill;
       }
+      @media (max-width: 700px) {
+        margin-top: 20px;
+      }
     }
 
     .description__title {
       color: white;
-      text-align: left;
-      padding-left: 1.5rem;
-      font-size: 1.4rem;
+
+      margin-left: 1.5rem;
+
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3em;
+      @media (max-width: 400px) {
+        display: block;
+        text-align: center;
+        margin-left: 0;
+      }
+
+      .item__name {
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+        @media (max-width: 700px) {
+          font-size: 0.8rem;
+        }
+        @media (max-width: 600px) {
+          font-size: 0.5rem;
+        }
+        @media (max-width: 400px) {
+          justify-content: center;
+          margin-bottom: 4em;
+        }
+
+        h1 {
+          align-self: center;
+          margin: auto 0.3em;
+        }
+
+        .bracket__left,
+        .bracket__right {
+          height: 50px;
+          width: 20px;
+          border: 1px solid white;
+          @media (max-width: 600px) {
+            height: 30px;
+            width: 10px;
+          }
+        }
+        .bracket__left {
+          border-right: none;
+        }
+        .bracket__right {
+          border-left: none;
+        }
+      }
     }
   }
 
   &__slider {
-    text-align: right;
-    margin: 1rem 0;
-    float: right;
-    margin-right: 1.5rem;
-
+    margin-right: 2em;
     button {
-      padding: 0.8rem;
+      padding: 0;
       margin: 0 0.5rem;
       border: 1px solid #fff;
       color: #fff;
@@ -181,40 +288,140 @@ export default {
       height: 65px;
       width: 65px;
       border-radius: 50%;
+      transition: all ease-in 0.1s;
+      cursor: pointer;
 
-      + button {
-        margin-right: 0;
+      @media (max-width: 700px) {
+        height: 40px;
+        width: 40px;
+        padding: 0;
       }
 
       img {
-        width: 28px;
-        background: white;
+        width: 3em;
         border-radius: 50%;
       }
     }
-
-    @media (min-width: 768px) {
-      margin-top: -4rem;
+    button:hover {
+      background: #3b3b3b;
     }
   }
+  .section {
+    padding: 2rem 3rem;
+    margin: 0 3rem;
+    @media (max-width: 500px) {
+      padding: 2rem 1rem;
+    }
 
-  &__body,
-  &__recent {
-    padding: 2rem;
-  }
-
-  &__recent {
-    border-top: 2px solid black;
-    margin-top: 3rem;
-  }
-
-  .recently-viewed {
     &__title {
+      position: relative;
       text-align: center;
+      padding: 0.5rem;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        height: 3px;
+        width: 80px;
+        background-color: rgba(0, 0, 0, 0.7);
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
 
-    .list-item.grid.top {
-      flex-basis: 30%;
+    &__button {
+      text-align: center;
+      margin: 0 auto;
+      padding-bottom: 0.5em;
+
+      button {
+        text-transform: capitalize;
+        font-size: 1.3rem;
+        font-weight: bolder;
+        border: 1px solid #3333334d;
+        color: #0e0d1a;
+        padding: 0.5rem 1rem;
+        background: none;
+        cursor: pointer;
+        transition: all ease-in 0.1s;
+
+        @media (max-width: 768px) {
+          width: 70vw;
+        }
+      }
+      button:hover {
+        background: #b6b5b585;
+      }
+    }
+
+    &__body {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #3333334d;
+      p {
+        flex-basis: 50%;
+        margin-bottom: 5rem;
+        @media (max-width: 900px) {
+          flex-basis: 80%;
+        }
+        @media (max-width: 600px) {
+          flex-basis: 100%;
+        }
+      }
+    }
+  }
+  .recently-viewed {
+    padding: 0 3rem;
+    @media (max-width: 500px) {
+      padding: 2rem 1rem;
+    }
+
+    &__title {
+      position: relative;
+      text-align: center;
+      padding: 0 0.5rem 0.5rem 0;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        height: 3px;
+        width: 80px;
+        background-color: rgba(0, 0, 0, 0.7);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    &__button {
+      text-align: center;
+      margin: 0 auto;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid #3333334d;
+
+      button {
+        margin-top: 10px;
+        text-transform: capitalize;
+        font-size: 1.3rem;
+        font-weight: bolder;
+        border: 1px solid #3333334d;
+        color: #0e0d1a;
+        padding: 0.5rem 1rem;
+        background: none;
+        cursor: pointer;
+        transition: all ease-in 0.1s;
+
+        @media (max-width: 768px) {
+          width: 70vw;
+        }
+      }
+      button:hover {
+        background: #b6b5b585;
+      }
     }
   }
 }

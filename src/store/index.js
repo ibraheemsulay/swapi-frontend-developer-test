@@ -10,6 +10,7 @@ export default createStore({
     starships: [],
     images,
     searchValue: " ",
+    planetSlider: [],
   },
 
   //GETTERS
@@ -45,6 +46,12 @@ export default createStore({
         character.name.toLowerCase().includes(state.searchValue.toLowerCase())
       ),
     searchValue: (state) => state.searchValue,
+    planetSlider: (state) =>
+      state.planetSlider
+        .filter((planet) =>
+          planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
+        )
+        .slice(0, 3),
   },
 
   //ACTIONS
@@ -60,28 +67,54 @@ export default createStore({
           })
           .then((res) => res.data);
         commit(commitState, response.results);
-        commit("setHasFetched", true);
+
         if (response.next !== null)
           dispatch("fetchData", { url: response.next, commitState });
       } catch (error) {
         console.log(error);
         commit("setHasFetched", false);
       }
+      commit("setHasFetched", true);
     },
     filter: ({ commit }, { value }) => {
-      console.log(value);
       commit("setSearchValue", value);
+    },
+    firstSlide: ({ state, commit }) => {
+      const value = state.planets.filter((planet) =>
+        planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
+      );
+      commit("setPlanetsChange", value);
+    },
+    secondSlide: ({ state, commit }) => {
+      const value = state.planets
+        .filter((planet) =>
+          planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
+        )
+        .slice(3, 6);
+      commit("setPlanetsChange", value);
+    },
+    thirdSlide: ({ state, commit }) => {
+      const value = state.planets
+        .filter((planet) =>
+          planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
+        )
+        .slice(6, 9);
+      commit("setPlanetsChange", value);
     },
   },
 
   //MUTATIONS
   mutations: {
     setHasFetched: (state, val) => (state.hasFetched = val),
+
     setCharacters: (state, val) =>
       (state.characters = [...state.characters, ...val]),
     setPlanets: (state, val) => (state.planets = [...state.planets, ...val]),
     setStarShips: (state, val) =>
       (state.starships = [...state.starships, ...val]),
     setSearchValue: (state, val) => (state.searchValue = val),
+    setPlanetSlider: (state, val) =>
+      (state.planetSlider = [...state.planetSlider, ...val]),
+    setPlanetsChange: (state, val) => (state.planetSlider = [...val]),
   },
 });

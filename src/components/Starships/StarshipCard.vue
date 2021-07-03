@@ -135,12 +135,17 @@ export default {
     background-color: #d8d8d8;
     padding: 0.7rem 1.2rem;
     font-size: 0.8rem;
+    transition: all ease-in 0.1s;
+    cursor: pointer;
 
     img {
       width: 20px;
       margin-left: 4px;
       vertical-align: middle;
     }
+  }
+  &__button button:hover {
+    background: #f2f2f2;
   }
 
   &.list {

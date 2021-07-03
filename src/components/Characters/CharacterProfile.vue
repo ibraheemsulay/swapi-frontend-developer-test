@@ -123,6 +123,9 @@ export default {
     a:-webkit-any-link {
       color: #494857;
     }
+    a:-webkit-any-link:hover {
+      color: #9e9da1dc;
+    }
   }
 
   &__title {

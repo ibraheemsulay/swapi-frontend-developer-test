@@ -1,6 +1,7 @@
 <template>
   <div v-if="hasFetched">
     <Header v-if="!$route.meta.hideHeader" />
+
     <router-view />
   </div>
   <div v-else class="loader">loading</div>
@@ -23,16 +24,20 @@ export default {
 
     (function () {
       store.dispatch("fetchData", {
+        url: "https://swapi.dev/api/planets",
+        commitState: "setPlanets",
+      });
+      store.dispatch("fetchData", {
+        url: "https://swapi.dev/api/planets",
+        commitState: "setPlanetSlider",
+      });
+      store.dispatch("fetchData", {
         url: "https://swapi.dev/api/people",
         commitState: "setCharacters",
       });
       store.dispatch("fetchData", {
         url: "https://swapi.dev/api/starships",
         commitState: "setStarShips",
-      });
-      store.dispatch("fetchData", {
-        url: "https://swapi.dev/api/planets",
-        commitState: "setPlanets",
       });
     })();
 

@@ -31,8 +31,8 @@
       />
     </div>
     <div class="section__button">
-      <router-link to="/starships">
-        <button type="button">View All</button>
+      <router-link :to="{ name: 'Home' }">
+        <button type="button">Return Home</button>
       </router-link>
     </div>
   </section>
@@ -133,6 +133,8 @@ export default {
       padding: 0.8rem 1.2rem;
       background: none;
       border-radius: 0.3rem;
+      cursor: pointer;
+      transition: all linear 0.1s;
 
       @media (min-width: 768px) {
         min-width: 500px;
@@ -141,6 +143,9 @@ export default {
       @media (max-width: 768px) {
         width: 70vw;
       }
+    }
+    button:hover {
+      background: #b6b5b585;
     }
   }
   @media (max-width: 768px) {
