@@ -78,6 +78,21 @@
       </div>
       <div class="recently-viewed">
         <h2 class="recently-viewed__title">Recently Viewed</h2>
+        <div class="view-card">
+          <Guideline
+            v-for="planet in displayPlanets"
+            :key="planet.name"
+            :imageLink="image[Math.floor(Math.random() * 3)]"
+            :name="planet.name"
+            :temperature="planet.temperature"
+            :population="planet.population"
+          />
+        </div>
+        <ul class="slider">
+          <li><button class="first" @click="first"></button></li>
+          <li><button class="second" @click="second"></button></li>
+          <li><button class="third" @click="third"></button></li>
+        </ul>
       </div>
     </section>
     <div class="recently-viewed__button">
@@ -90,14 +105,21 @@
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+// import PlanetCard from "../components/Planets/PlanetCard.vue";
+import Guideline from "../components/Partials/Guideline.vue";
 
 export default {
   props: ["category", "name"],
-  component: {},
+  components: {
+    Guideline,
+  },
   setup(props) {
     const router = useRouter();
     const store = useStore();
     const data = reactive({
+      displayPlanets: computed(() => store.getters.planetSlider),
+      planets: computed(() => store.getters.popularPlanets),
+      image: computed(() => store.state.images.planets),
       imageLink: store.state.images[`${props.category}`][0],
       counter: 0,
       heroBanner: computed(() => store.state.images.heroBanner),
@@ -131,7 +153,6 @@ export default {
     };
 
     const navigatePrevious = () => {
-      console.log(data.item);
       data.imageLink =
         data.images[Math.floor(Math.random() * data.images.length)];
       if (data.counter < 0) data.counter = data.allCharacters.length - 1;
@@ -147,10 +168,34 @@ export default {
       --data.counter;
     };
 
+    const first = (e) => {
+      store.dispatch("firstSlide");
+      e.target.style.backgroundColor = "black";
+      document.getElementsByClassName("second")[0].style.background = "white";
+      document.getElementsByClassName("third")[0].style.background = "white";
+    };
+
+    const second = (e) => {
+      store.dispatch("secondSlide");
+      e.target.style.backgroundColor = "black";
+      document.getElementsByClassName("first")[0].style.background = "white";
+      document.getElementsByClassName("third")[0].style.background = "white";
+    };
+
+    const third = (e) => {
+      store.dispatch("thirdSlide");
+      e.target.style.backgroundColor = "black";
+      document.getElementsByClassName("second")[0].style.background = "white";
+      document.getElementsByClassName("first")[0].style.background = "white";
+    };
+
     return {
       ...toRefs(data),
       navigatePrevious,
       navigateNext,
+      first,
+      second,
+      third,
     };
   },
 };
@@ -330,37 +375,10 @@ export default {
       }
     }
 
-    &__button {
-      text-align: center;
-      margin: 0 auto;
-      padding-bottom: 0.5em;
-
-      button {
-        text-transform: capitalize;
-        font-size: 1.3rem;
-        font-weight: bolder;
-        border: 1px solid #3333334d;
-        color: #0e0d1a;
-        padding: 0.5rem 1rem;
-        background: none;
-        cursor: pointer;
-        transition: all ease-in 0.1s;
-
-        @media (max-width: 768px) {
-          width: 70vw;
-        }
-      }
-      button:hover {
-        background: #b6b5b585;
-      }
-    }
-
     &__body {
       margin-top: 2rem;
       display: flex;
       justify-content: space-around;
-      align-items: flex-start;
-      flex-wrap: wrap;
       border-bottom: 1px solid #3333334d;
       p {
         flex-basis: 50%;
@@ -379,6 +397,15 @@ export default {
     @media (max-width: 500px) {
       padding: 2rem 1rem;
     }
+    .view-card {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 50px;
+      flex-wrap: wrap;
+      @media (max-width: 600px) {
+        display: block;
+      }
+    }
 
     &__title {
       position: relative;
@@ -396,6 +423,23 @@ export default {
         transform: translateX(-50%);
       }
     }
+    .slider {
+      display: flex;
+      justify-content: center;
+      list-style-type: none;
+      margin-bottom: 2em;
+      li {
+        margin: 0 0.5em;
+        button {
+          height: 15px;
+          border-radius: 8px;
+          background: #fff;
+        }
+        .first {
+          background: #000;
+        }
+      }
+    }
 
     &__button {
       text-align: center;
@@ -404,7 +448,6 @@ export default {
       border-bottom: 1px solid #3333334d;
 
       button {
-        margin-top: 10px;
         text-transform: capitalize;
         font-size: 1.3rem;
         font-weight: bolder;
@@ -414,6 +457,7 @@ export default {
         background: none;
         cursor: pointer;
         transition: all ease-in 0.1s;
+        border-radius: 5px;
 
         @media (max-width: 768px) {
           width: 70vw;

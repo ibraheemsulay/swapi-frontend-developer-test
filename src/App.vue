@@ -4,7 +4,9 @@
 
     <router-view />
   </div>
-  <div v-else class="loader">loading</div>
+  <div v-else class="loader">
+    <img class="logo" src="@/assets/Images/logo.png" />
+  </div>
 </template>
 
 <script>
@@ -51,5 +53,38 @@ export default {
 <style lang="scss">
 body {
   margin: 0;
+}
+.loader {
+  background-image: url("assets/Images/hero-banner.jpg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  .logo {
+    width: 100px;
+    height: auto;
+    animation-name: fade;
+    animation-iteration-count: infinite;
+    animation-duration: 0.5s;
+    animation-direction: alternate;
+  }
+  @keyframes fade {
+    0% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 0.6;
+    }
+    75% {
+      opacity: 0.4;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
 }
 </style>

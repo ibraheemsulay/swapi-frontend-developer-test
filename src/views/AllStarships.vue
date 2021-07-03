@@ -12,8 +12,8 @@
       />
     </div>
     <div class="section__button">
-      <router-link to="/starships">
-        <button type="button">View All</button>
+      <router-link :to="{ name: 'Home' }">
+        <button type="button">Return Home</button>
       </router-link>
     </div>
   </section>

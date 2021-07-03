@@ -1,28 +1,19 @@
 <template>
-  <div class="list-item starship grid top">
+  <div class="list-item planet grid top">
     <div class="list-item__image">
-      <img :src="image[Math.floor(Math.random() * image.length)]" :alt="name" />
+      <img :src="imageLink" :alt="name" />
     </div>
     <div class="list-item__body">
       <div class="list-item__title">
         <h4>{{ name }}</h4>
       </div>
-      <p class="list-item__description" v-if="category == 'characters'">
-        {{ name.split(" ")[0] }} was born in the year {{ birthyear }}, and is a
-        {{ gender === "n/a" ? "robot" : gender }}
-      </p>
-      <p class="list-item__description" v-else-if="category == 'planets'">
-        {{ name.split(" ")[0] }} {{ name }} has a temperature of
-        {{ temperature }}, and a population of {{ population }}
-      </p>
-      <p class="list-item__description" v-else-if="category == 'starships'">
-        {{ name.split(" ")[0] }} is of the {{ model }} model, and has a cargo of
-        {{ cargo }}
+      <p class="list-item__description">
+        {{ name.split(" ")[0] }} {{ characterDescription }}
       </p>
       <router-link
         :to="{
           name: 'Description',
-          params: { category: 'starships', name: name },
+          params: { category: 'planets', name: name },
         }"
         class="list-item__button"
       >
@@ -35,31 +26,21 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  props: [
-    "imageLink",
-    "birthyear",
-    "gender",
-    "name",
-    "model",
-    "cargo",
-    "temperature",
-    "population",
-    "category",
-  ],
+  props: ["imageLink", "name", "temperature", "population"],
 
   setup(props) {
     const store = useStore();
     const data = reactive({
-      item: computed(() => store.state[`${props.category}`]),
-      images: computed(() => store.state.images[`${props.category}`]),
+      characterDescription: `${props.name} has a temperature of ${props.temperature}, and a population of ${props.population}`,
     });
 
     const resetSearchBar = () => {
       store.commit("setSearchValue", " ");
+      console.log("working");
     };
 
     return {
@@ -164,7 +145,7 @@ export default {
       vertical-align: middle;
     }
   }
-  &__button button:hover {
+  button:hover {
     background: #f2f2f2;
   }
 
