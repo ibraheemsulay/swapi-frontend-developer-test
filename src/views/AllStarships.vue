@@ -3,7 +3,7 @@
     <h2 class="section__title">All Starships</h2>
     <div class="section__body">
       <StarshipCard
-        v-for="starship in allStarships"
+        v-for="starship in starships"
         :key="starship.name"
         :imageLink="imageLink[Math.floor(Math.random() * 5)]"
         :name="starship.name"
@@ -31,7 +31,7 @@ export default {
   setup() {
     const store = useStore();
     const data = reactive({
-      allStarships: computed(() => store.getters.allStarships),
+      starships: computed(() => store.getters.starships),
       imageLink: computed(() => store.state.images.starships),
     });
 

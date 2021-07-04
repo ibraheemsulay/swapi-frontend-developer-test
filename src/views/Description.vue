@@ -129,7 +129,7 @@ export default {
           (item) => item.name == props.name
         )
       ),
-      allCharacters: computed(() =>
+      characters: computed(() =>
         store.state[`${props.category}`].map((item) => item.name)
       ),
       images: computed(() => store.state.images[`${props.category}`]),
@@ -138,12 +138,12 @@ export default {
     const navigateNext = () => {
       data.imageLink =
         data.images[Math.floor(Math.random() * data.images.length)];
-      if (data.counter == data.allCharacters.length) data.counter = 0;
-      if (data.counter < data.allCharacters.length) {
+      if (data.counter == data.characters.length) data.counter = 0;
+      if (data.counter < data.characters.length) {
         router.push({
           name: "Description",
           params: {
-            name: data.allCharacters[data.counter],
+            name: data.characters[data.counter],
             category: props.category,
           },
         });
@@ -155,12 +155,12 @@ export default {
     const navigatePrevious = () => {
       data.imageLink =
         data.images[Math.floor(Math.random() * data.images.length)];
-      if (data.counter < 0) data.counter = data.allCharacters.length - 1;
+      if (data.counter < 0) data.counter = data.characters.length - 1;
       if (data.counter > 0) {
         router.push({
           name: "Description",
           params: {
-            name: data.allCharacters[data.counter],
+            name: data.characters[data.counter],
             category: props.category,
           },
         });
@@ -203,6 +203,7 @@ export default {
 
 <style lang="scss" scoped>
 .description {
+  padding-bottom: 5em;
   .hero {
     position: relative;
     min-height: 600px;

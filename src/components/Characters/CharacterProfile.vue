@@ -34,7 +34,7 @@ export default {
     const data = reactive({
       characterDescription: `was born in the year ${props.birthyear}, and is a
       ${props.gender === "n/a" ? "robot" : props.gender}`,
-      allCharacters: computed(() => store.getters.allCharacters),
+      characters: computed(() => store.getters.characters),
     });
 
     const resetSearchBar = () => {

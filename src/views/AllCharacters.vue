@@ -30,6 +30,7 @@
         :display="display"
       />
     </div>
+    <Pagination :category="category" />
     <div class="section__button">
       <router-link :to="{ name: 'Home' }">
         <button type="button">Return Home</button>
@@ -42,18 +43,22 @@
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 import CharacterProfile from "../components/Characters/CharacterProfile.vue";
+import Pagination from "../components/Partials/Pagination.vue";
 
 export default {
   components: {
     CharacterProfile,
+    Pagination,
   },
   setup() {
     const store = useStore();
     const data = reactive({
+      category: "characters",
       gender: "allGender",
       display: "grid",
+      paginationItem: computed(() => store.getters.paginationItem),
       characters: computed(() =>
-        store.getters.allCharacters
+        store.getters.characters
           .map((character) => {
             if (character.gender === data.gender) {
               return character;
@@ -65,6 +70,18 @@ export default {
       ),
       imageLink: computed(() => store.state.images.characters),
     });
+
+    // watch(
+    //   () => _.cloneDeep(data.characters),
+    //   (newValue) => {
+    //     store.commit("setPaginateItem", newValue);
+    //   }
+    // );
+
+    (function () {
+      store.commit("setPaginationItem", data.characters.slice(0, 6));
+      console.log(data.paginationItem);
+    })();
 
     return {
       ...toRefs(data),

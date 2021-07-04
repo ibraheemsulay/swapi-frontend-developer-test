@@ -11,6 +11,7 @@ export default createStore({
     images,
     searchValue: " ",
     planetSlider: [],
+    paginateItem: "",
   },
 
   //GETTERS
@@ -33,15 +34,15 @@ export default createStore({
           character.name.toLowerCase().includes(state.searchValue.toLowerCase())
         )
         .slice(0, 4),
-    allStarships: (state) =>
+    starships: (state) =>
       state.starships.filter((starship) =>
         starship.name.toLowerCase().includes(state.searchValue.toLowerCase())
       ),
-    allPlanets: (state) =>
+    planets: (state) =>
       state.planets.filter((planet) =>
         planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
       ),
-    allCharacters: (state) =>
+    characters: (state) =>
       state.characters.filter((character) =>
         character.name.toLowerCase().includes(state.searchValue.toLowerCase())
       ),

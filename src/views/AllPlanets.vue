@@ -42,7 +42,7 @@ export default {
     const store = useStore();
     const data = reactive({
       display: "grid",
-      planets: computed(() => store.getters.allPlanets),
+      planets: computed(() => store.getters.planets),
       imageLink: computed(() => store.state.images.planets),
     });
 
