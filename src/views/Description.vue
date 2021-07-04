@@ -96,7 +96,9 @@
       </div>
     </section>
     <div class="recently-viewed__button">
-      <button type="button">Return Home</button>
+      <router-link :to="{ name: 'home' }"
+        ><button type="button">Return Home</button></router-link
+      >
     </div>
   </div>
 </template>
@@ -105,7 +107,6 @@
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-// import PlanetCard from "../components/Planets/PlanetCard.vue";
 import Guideline from "../components/Partials/Guideline.vue";
 
 export default {

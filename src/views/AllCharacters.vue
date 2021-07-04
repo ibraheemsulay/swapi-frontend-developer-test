@@ -21,7 +21,7 @@
     </div>
     <div class="section__body">
       <CharacterProfile
-        v-for="character in characters"
+        v-for="character in paginationItem"
         :key="character.name"
         :imageLink="imageLink[Math.floor(Math.random() * 4)]"
         :name="character.name"
@@ -30,7 +30,7 @@
         :display="display"
       />
     </div>
-    <Pagination :category="category" />
+    <Pagination :category="category" :paginationItem="characters" />
     <div class="section__button">
       <router-link :to="{ name: 'Home' }">
         <button type="button">Return Home</button>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import CharacterProfile from "../components/Characters/CharacterProfile.vue";
 import Pagination from "../components/Partials/Pagination.vue";
@@ -71,17 +71,11 @@ export default {
       imageLink: computed(() => store.state.images.characters),
     });
 
-    // watch(
-    //   () => _.cloneDeep(data.characters),
-    //   (newValue) => {
-    //     store.commit("setPaginateItem", newValue);
-    //   }
-    // );
-
-    (function () {
-      store.commit("setPaginationItem", data.characters.slice(0, 6));
-      console.log(data.paginationItem);
-    })();
+    onMounted(() => {
+      (function () {
+        store.commit("setPaginationItem", data.characters.slice(0, 6));
+      })();
+    });
 
     return {
       ...toRefs(data),

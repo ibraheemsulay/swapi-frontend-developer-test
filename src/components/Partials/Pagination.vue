@@ -1,6 +1,9 @@
 <template>
   <div class="pagination">
-    <div><button disabled>3</button> of <button disabled>40</button></div>
+    <div>
+      <button disabled>{{ current }}</button> of
+      <button disabled>{{ total }}</button>
+    </div>
     <div>
       <button @click="previous">
         <img src="@/assets/Images/chevron-left.svg" alt="previous" />
@@ -14,7 +17,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs, computed, watch } from "vue";
 import { useStore } from "vuex";
 
 export default {
@@ -22,46 +25,67 @@ export default {
   setup(props) {
     const store = useStore();
     const data = reactive({
+      paginationItem: props.paginationItem,
+      total: "?",
+      nextCount: 1,
+      prevCount: 0,
       current:
-        store.getters[`${props.category}`].length - 9 > 1
-          ? 9
+        store.getters[`${props.category}`].length - 6 > 1
+          ? 6
           : store.getters[`${props.category}`].length,
       allItems: computed(() => store.getters[`${props.category}`]),
     });
 
-    const next = (e) => {
-      data.total = data.props.paginationItem.length;
-      const element = e.currentTarget;
-      element.clicks = (element.clicks || 0) + 1;
+    watch(
+      () => [...props.paginationItem],
+      (currentValue) => {
+        data.paginationItem = currentValue;
+        store.commit("setPaginationItem", currentValue.slice(0, 6));
+      }
+    );
 
-      let val = 6 * element.clicks;
-      if (val < props.paginationItem.length) {
+    const next = () => {
+      data.total = data.paginationItem.length;
+
+      console.log("next", data.nextCount, data.prevCount);
+
+      let val = 6 * data.nextCount;
+      if (val < data.paginationItem.length && val !== -6) {
         data.current = val;
         store.commit(
           "setPaginationItem",
-          props.paginationItem.slice(val, val + 6)
+          data.paginationItem.slice(val, val + 6)
         );
+        ++data.nextCount;
+        if (Math.sign(data.prevCount) === -1) {
+          const limit = Math.ceil(data.paginationItem.length / data.nextCount);
+          data.prevCount <= -limit ? --data.prevCount : false;
+        } else {
+          --data.prevCount;
+        }
       } else {
-        data.current = props.paginationItem.length;
-        element.clicks = 0;
+        data.current = data.paginationItem.length;
+        data.nextCount = 0;
       }
     };
-    const previous = (e) => {
-      data.total = data.props.paginationItem.length;
-      const element = e.currentTarget;
-      element.clicks = (element.clicks || 0) + 1;
+    const previous = () => {
+      data.total = data.paginationItem.length;
 
-      let val = 6 * element.clicks;
-      if (val < props.paginationItem.length) {
+      console.log("prev", data.nextCount, data.prevCount);
+
+      let val = 6 * data.prevCount;
+      if (val < data.paginationItem.length && val !== -6) {
         data.current = val;
         store.commit(
           "setPaginationItem",
-          props.paginationItem.slice(val, val + 6)
+          data.paginationItem.slice(val, val + 6)
         );
-        console.log(store.state.paginationItem);
+        const limit = Math.ceil(data.paginationItem.length / data.nextCount);
+        -data.nextCount < -limit ? false : --data.nextCount;
+        ++data.prevCount;
       } else {
-        data.current = props.paginationItem.length;
-        element.clicks = 0;
+        data.current = data.paginationItem.length;
+        data.prevCount = 0;
       }
     };
 

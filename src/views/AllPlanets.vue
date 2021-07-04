@@ -12,7 +12,7 @@
     </div>
     <div class="section__body">
       <PlanetProfile
-        v-for="planet in planets"
+        v-for="planet in paginationItem"
         :key="planet.name"
         :imageLink="imageLink[Math.floor(Math.random() * 3)]"
         :name="planet.name"
@@ -21,6 +21,7 @@
         :display="display"
       />
     </div>
+    <Pagination :category="category" :paginationItem="planets" />
     <div class="section__button">
       <router-link :to="{ name: 'Home' }">
         <button type="button">Return Home</button>
@@ -30,20 +31,30 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import PlanetProfile from "../components/Planets/PlanetProfile.vue";
+import Pagination from "../components/Partials/Pagination.vue";
 
 export default {
   components: {
     PlanetProfile,
+    Pagination,
   },
   setup() {
     const store = useStore();
     const data = reactive({
+      category: "planets",
       display: "grid",
+      paginationItem: computed(() => store.getters.paginationItem),
       planets: computed(() => store.getters.planets),
       imageLink: computed(() => store.state.images.planets),
+    });
+
+    onMounted(() => {
+      (function () {
+        store.commit("setPaginationItem", data.planets.slice(0, 6));
+      })();
     });
 
     return {

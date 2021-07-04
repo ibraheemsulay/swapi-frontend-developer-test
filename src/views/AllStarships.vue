@@ -3,7 +3,7 @@
     <h2 class="section__title">All Starships</h2>
     <div class="section__body">
       <StarshipCard
-        v-for="starship in starships"
+        v-for="starship in paginationItem"
         :key="starship.name"
         :imageLink="imageLink[Math.floor(Math.random() * 5)]"
         :name="starship.name"
@@ -11,6 +11,7 @@
         :model="starship.model"
       />
     </div>
+    <Pagination :category="category" :paginationItem="starships" />
     <div class="section__button">
       <router-link :to="{ name: 'Home' }">
         <button type="button">Return Home</button>
@@ -20,19 +21,29 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import StarshipCard from "../components/Starships/StarshipCard.vue";
+import Pagination from "../components/Partials/Pagination.vue";
 
 export default {
   components: {
     StarshipCard,
+    Pagination,
   },
   setup() {
     const store = useStore();
     const data = reactive({
+      category: "starships",
+      paginationItem: computed(() => store.getters.paginationItem),
       starships: computed(() => store.getters.starships),
       imageLink: computed(() => store.state.images.starships),
+    });
+
+    onMounted(() => {
+      (function () {
+        store.commit("setPaginationItem", data.starships.slice(0, 6));
+      })();
     });
 
     return {

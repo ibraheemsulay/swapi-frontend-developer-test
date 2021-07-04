@@ -11,7 +11,7 @@ export default createStore({
     images,
     searchValue: " ",
     planetSlider: [],
-    paginateItem: "",
+    paginationItem: "",
   },
 
   //GETTERS
@@ -53,6 +53,7 @@ export default createStore({
           planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
         )
         .slice(0, 3),
+    paginationItem: (state) => state.paginationItem,
   },
 
   //ACTIONS
@@ -117,5 +118,6 @@ export default createStore({
     setPlanetSlider: (state, val) =>
       (state.planetSlider = [...state.planetSlider, ...val]),
     setPlanetsChange: (state, val) => (state.planetSlider = [...val]),
+    setPaginationItem: (state, val) => (state.paginationItem = [...val]),
   },
 });
