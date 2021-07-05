@@ -230,6 +230,9 @@ export default {
 
     &__icon {
       left: 1rem;
+      img {
+        width: 12px;
+      }
     }
   }
 }
