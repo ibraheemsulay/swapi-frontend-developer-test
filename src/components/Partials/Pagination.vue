@@ -53,7 +53,7 @@ export default {
       ++data.count;
       document.getElementById("previous").disabled = false;
       let val = 6 * data.count;
-      if (val > data.paginationItem.length) {
+      if (val >= data.paginationItem.length) {
         val = val % 6 == 0 ? 6 : val % 6;
         document.getElementById("next").disabled = true;
 

@@ -3,7 +3,9 @@
     <header class="hero">
       <img class="hero__banner" :src="heroBanner" alt="Hero banner" />
       <nav class="hero__navbar">
-        <img :src="logo" alt="Star wars logo" class="hero__logo" />
+        <router-link :to="{ name: 'Home' }">
+          <img :src="logo" alt="Star wars logo" class="hero__logo" />
+        </router-link>
       </nav>
       <div class="hero__body">
         <div class="img__container">
