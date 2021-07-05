@@ -42,6 +42,9 @@ export default {
         store.commit("setPaginationItem", currentValue.slice(0, 6));
         data.current = currentValue.slice(0, 6).length;
         data.total = data.paginationItem.length;
+        data.count = 1;
+        document.getElementById("previous").disabled = true;
+        document.getElementById("next").disabled = false;
       }
     );
 
