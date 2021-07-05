@@ -127,7 +127,7 @@ export default createStore({
     },
     addToRecentlyViewed: ({ state, commit }, { newItem }) => {
       let list = state.recentlyViewed.slice(1, 9);
-      list.push(newItem);
+      list = [...list, newItem];
       commit("setRecentlyViewed", list);
     },
   },
