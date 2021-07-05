@@ -5,11 +5,11 @@
       <button disabled>{{ total }}</button>
     </div>
     <div>
-      <button @click="previous">
+      <button disabled id="previous" @click="previous">
         <img src="@/assets/Images/chevron-left.svg" alt="previous" />
       </button>
 
-      <button @click="next">
+      <button id="next" @click="next">
         <img src="@/assets/Images/chevron-right.svg" alt="next" />
       </button>
     </div>
@@ -27,8 +27,7 @@ export default {
     const data = reactive({
       paginationItem: props.paginationItem,
       total: props.paginationItem.length,
-      nextCount: 1,
-      prevCount: 0,
+      count: 1,
       current:
         store.getters[`${props.category}`].length - 6 > 1
           ? 6
@@ -46,40 +45,42 @@ export default {
       }
     );
 
+    //PAGINATION NEXT BUTTON
     const next = () => {
-      data.total = data.paginationItem.length;
+      ++data.count;
+      document.getElementById("previous").disabled = false;
+      let val = 6 * data.count;
+      if (val > data.paginationItem.length) {
+        val = val % 6 == 0 ? 6 : val % 6;
+        document.getElementById("next").disabled = true;
 
-      let val = 6 * data.nextCount;
-      if (val < data.paginationItem.length && val !== -6) {
-        const list = data.paginationItem.slice(val, val + 6);
-        data.current = val;
+        const list = data.paginationItem.slice(
+          -val,
+          data.paginationItem.length
+        );
         store.commit("setPaginationItem", list);
-        ++data.nextCount;
-        if (Math.sign(data.prevCount) === -1) {
-          const limit = Math.ceil(data.paginationItem.length / data.nextCount);
-          data.prevCount <= -limit ? --data.prevCount : false;
-        } else {
-          --data.prevCount;
-        }
+        data.current = data.paginationItem.indexOf(list[list.length - 1]) + 1;
       } else {
-        data.current = data.paginationItem.length;
-        data.nextCount = 0;
+        const list = data.paginationItem.slice(val, val + 6);
+        store.commit("setPaginationItem", list);
+        data.current = data.paginationItem.indexOf(list[list.length - 1]) + 1;
       }
     };
-    const previous = () => {
-      data.total = data.paginationItem.length;
 
-      let val = 6 * data.prevCount;
-      if (val < data.paginationItem.length && val !== -6) {
-        const list = data.paginationItem.slice(val, val + 6);
-        data.current = val;
+    //PAGINATION PREVIOUS BUTTON
+    const previous = () => {
+      --data.count;
+      document.getElementById("next").disabled = false;
+      let val = 6 * data.count;
+      if (val == 0) {
+        document.getElementById("previous").disabled = true;
+        const list = data.paginationItem.slice(0, 6);
         store.commit("setPaginationItem", list);
-        const limit = Math.ceil(data.paginationItem.length / data.nextCount);
-        -data.nextCount < -limit ? false : --data.nextCount;
-        ++data.prevCount;
+        data.current = data.paginationItem.indexOf(list[list.length - 1]) + 1;
       } else {
-        data.current = data.paginationItem.length;
-        data.prevCount = 0;
+        const list = data.paginationItem.slice(val, val + 6);
+        store.commit("setPaginationItem", list);
+        data.current = data.paginationItem.indexOf(list[0]) + 1;
       }
     };
 

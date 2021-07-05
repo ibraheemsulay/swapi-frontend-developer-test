@@ -12,7 +12,7 @@
         <div class="description__title">
           <div class="item__name">
             <div class="bracket__left"></div>
-            <h1>{{ name }}</h1>
+            <h1>{{ name.split(" ")[0] }}</h1>
             <div class="bracket__right"></div>
           </div>
 
