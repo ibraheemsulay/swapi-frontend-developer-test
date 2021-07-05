@@ -1,6 +1,15 @@
 <template>
   <section class="section">
     <h2 class="section__title">All Starships</h2>
+    <div class="filters">
+      <label for="display">
+        DISPLAY
+        <select id="display" v-model="display">
+          <option value="grid" selected>Grid</option>
+          <option value="list">List</option>
+        </select>
+      </label>
+    </div>
     <div class="section__body">
       <StarshipCard
         v-for="starship in paginationItem"
@@ -9,6 +18,7 @@
         :name="starship.name"
         :cargo="starship.cargo_capacity"
         :model="starship.model"
+        :display="display"
       />
     </div>
     <Pagination :category="category" :paginationItem="starships" />
@@ -35,6 +45,7 @@ export default {
     const store = useStore();
     const data = reactive({
       category: "starships",
+      display: "grid",
       paginationItem: computed(() => store.getters.paginationItem),
       starships: computed(() => store.getters.starships),
       imageLink: computed(() => store.state.images.starships),
@@ -71,6 +82,25 @@ export default {
       background-color: rgba(0, 0, 0, 0.7);
       left: 50%;
       transform: translateX(-50%);
+    }
+  }
+
+  .filters {
+    display: flex;
+    justify-content: start;
+    margin: 3em auto 5em auto;
+    label {
+      margin: 0 auto;
+      select {
+        margin-left: 1em;
+        padding: 0.5em 0.5em 0.5em 0.2em;
+        border-radius: 4px;
+        border: 2px solid;
+        background: #fff;
+        &:hover {
+          background: #cfcccc56;
+        }
+      }
     }
   }
 

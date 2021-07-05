@@ -1,6 +1,6 @@
 <template>
   <div class="list-item starship grid top">
-    <div class="list-item__image">
+    <div v-show="display === 'grid'" class="list-item__image">
       <img :src="imageLink" :alt="name" />
     </div>
     <div class="list-item__body">
@@ -30,7 +30,7 @@ import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  props: ["imageLink", "name", "model", "cargo"],
+  props: ["imageLink", "name", "model", "cargo", "display"],
 
   setup(props) {
     const store = useStore();
