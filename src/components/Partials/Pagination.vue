@@ -47,8 +47,6 @@ export default {
     const next = () => {
       data.total = data.paginationItem.length;
 
-      console.log("next", data.nextCount, data.prevCount);
-
       let val = 6 * data.nextCount;
       if (val < data.paginationItem.length && val !== -6) {
         data.current = val;
@@ -70,8 +68,6 @@ export default {
     };
     const previous = () => {
       data.total = data.paginationItem.length;
-
-      console.log("prev", data.nextCount, data.prevCount);
 
       let val = 6 * data.prevCount;
       if (val < data.paginationItem.length && val !== -6) {

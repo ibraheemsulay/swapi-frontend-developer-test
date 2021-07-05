@@ -96,7 +96,7 @@
       </div>
     </section>
     <div class="recently-viewed__button">
-      <router-link :to="{ name: 'home' }"
+      <router-link :to="{ name: 'Home' }"
         ><button type="button">Return Home</button></router-link
       >
     </div>

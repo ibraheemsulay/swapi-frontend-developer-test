@@ -40,7 +40,6 @@ export default {
 
     const resetSearchBar = () => {
       store.commit("setSearchValue", " ");
-      console.log("working");
     };
 
     return {
