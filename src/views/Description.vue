@@ -79,7 +79,7 @@
       <div class="recently-viewed">
         <h2 class="recently-viewed__title">Recently Viewed</h2>
         <div class="view-card">
-          <Guideline
+          <RecentlyViewed
             v-for="planet in displayPlanets"
             :key="planet.name"
             :imageLink="image[Math.floor(Math.random() * 3)]"
@@ -107,12 +107,12 @@
 import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import Guideline from "../components/Partials/Guideline.vue";
+import RecentlyViewed from "../components/Partials/RecentlyViewed.vue";
 
 export default {
   props: ["category", "name"],
   components: {
-    Guideline,
+    RecentlyViewed,
   },
   setup(props) {
     const router = useRouter();
