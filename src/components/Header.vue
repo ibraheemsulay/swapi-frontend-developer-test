@@ -225,6 +225,7 @@ export default {
       font-size: 1rem;
       padding: 0.8rem;
       padding-left: 3rem;
+      width: 90%;
     }
 
     &__icon {

@@ -51,8 +51,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap");
 body {
   margin: 0;
+  font-family: "Source Sans Pro", sans-serif;
 }
 .loader {
   background-image: url("assets/Images/hero-banner.jpg");

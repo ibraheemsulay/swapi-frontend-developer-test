@@ -26,7 +26,7 @@ export default {
     const store = useStore();
     const data = reactive({
       paginationItem: props.paginationItem,
-      total: "?",
+      total: props.paginationItem.length,
       nextCount: 1,
       prevCount: 0,
       current:
@@ -41,6 +41,8 @@ export default {
       (currentValue) => {
         data.paginationItem = currentValue;
         store.commit("setPaginationItem", currentValue.slice(0, 6));
+        data.current = currentValue.slice(0, 6).length;
+        data.total = data.paginationItem.length;
       }
     );
 
@@ -49,11 +51,9 @@ export default {
 
       let val = 6 * data.nextCount;
       if (val < data.paginationItem.length && val !== -6) {
+        const list = data.paginationItem.slice(val, val + 6);
         data.current = val;
-        store.commit(
-          "setPaginationItem",
-          data.paginationItem.slice(val, val + 6)
-        );
+        store.commit("setPaginationItem", list);
         ++data.nextCount;
         if (Math.sign(data.prevCount) === -1) {
           const limit = Math.ceil(data.paginationItem.length / data.nextCount);
@@ -71,11 +71,9 @@ export default {
 
       let val = 6 * data.prevCount;
       if (val < data.paginationItem.length && val !== -6) {
+        const list = data.paginationItem.slice(val, val + 6);
         data.current = val;
-        store.commit(
-          "setPaginationItem",
-          data.paginationItem.slice(val, val + 6)
-        );
+        store.commit("setPaginationItem", list);
         const limit = Math.ceil(data.paginationItem.length / data.nextCount);
         -data.nextCount < -limit ? false : --data.nextCount;
         ++data.prevCount;
