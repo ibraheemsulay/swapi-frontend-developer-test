@@ -73,7 +73,7 @@ export default {
   &__body {
     margin-top: 2rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: flex-start;
     flex-wrap: wrap;
 
