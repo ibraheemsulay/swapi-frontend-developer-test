@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
@@ -36,10 +36,11 @@ export default {
     const store = useStore();
     const data = reactive({
       characterDescription: `${props.name} has a temperature of ${props.temperature}, and a population of ${props.population}`,
+      recentlyViewed: computed(() => store.getters.recentlyViewed),
     });
 
     const resetSearchBar = () => {
-      store.commit("setSearchValue", " ");
+      store.commit("setSearchValue", "");
     };
 
     return {

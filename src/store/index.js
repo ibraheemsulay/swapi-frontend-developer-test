@@ -9,9 +9,10 @@ export default createStore({
     planets: [],
     starships: [],
     images,
-    searchValue: " ",
+    searchValue: "",
     planetSlider: [],
     paginationItem: "",
+    recentlyViewed: [],
   },
 
   //GETTERS
@@ -54,10 +55,12 @@ export default createStore({
         )
         .slice(0, 3),
     paginationItem: (state) => state.paginationItem,
+    recentlyViewed: (state) => state.recentViewed,
   },
 
   //ACTIONS
   actions: {
+    //FETCH DATA FROM API
     fetchData: async ({ commit, dispatch }, { url, commitState }) => {
       try {
         const response = await axios
@@ -78,9 +81,13 @@ export default createStore({
       }
       commit("setHasFetched", true);
     },
+
+    //SEARCH FILTER OPTION
     filter: ({ commit }, { value }) => {
       commit("setSearchValue", value);
     },
+
+    //SLIDER BUTTON FUNCTIONS IN POPULAR PLANET COMPONENTS
     firstSlide: ({ state, commit }) => {
       const value = state.planets.filter((planet) =>
         planet.name.toLowerCase().includes(state.searchValue.toLowerCase())
@@ -95,6 +102,7 @@ export default createStore({
         .slice(3, 6);
       commit("setPlanetsChange", value);
     },
+
     thirdSlide: ({ state, commit }) => {
       const value = state.planets
         .filter((planet) =>
@@ -102,6 +110,25 @@ export default createStore({
         )
         .slice(6, 9);
       commit("setPlanetsChange", value);
+    },
+
+    recentyViewed: ({ state, commit }, { id }) => {
+      let value = state.recentlyViewed;
+      if (id == 1) {
+        value = state.recentlyViewed.slice(0, 3);
+      }
+      if (id == 2) {
+        value = state.recentlyViewed.slice(3, 6);
+      }
+      if (id == 3) {
+        value = state.recentlyViewed.slice(6, 9);
+      }
+      commit("setRecentlyViewed", value);
+    },
+    addToRecentlyViewed: ({ state, commit }, { newItem }) => {
+      let list = state.recentlyViewed.slice(1, 9);
+      list.push(newItem);
+      commit("setRecentlyViewed", list);
     },
   },
 
@@ -119,5 +146,6 @@ export default createStore({
       (state.planetSlider = [...state.planetSlider, ...val]),
     setPlanetsChange: (state, val) => (state.planetSlider = [...val]),
     setPaginationItem: (state, val) => (state.paginationItem = [...val]),
+    setRecentlyViewed: (state, val) => (state.recentlyViewed = [...val]),
   },
 });

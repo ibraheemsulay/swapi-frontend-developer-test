@@ -10,6 +10,7 @@
         :name="starship.name"
         :cargo="starship.cargo_capacity"
         :model="starship.model"
+        :display="display"
       />
     </div>
     <div class="section__button">
@@ -32,11 +33,12 @@ export default {
   setup() {
     const store = useStore();
     const data = reactive({
+      display: "grid",
       starships: computed(() => store.getters.popularStarships),
       imageLink: computed(() => store.state.images.starships),
     });
     const resetSearchBar = () => {
-      store.commit("setSearchValue", " ");
+      store.commit("setSearchValue", "");
     };
     return {
       ...toRefs(data),

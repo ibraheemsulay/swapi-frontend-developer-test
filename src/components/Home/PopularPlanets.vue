@@ -43,7 +43,7 @@ export default {
     });
 
     const resetSearchBar = () => {
-      store.commit("setSearchValue", " ");
+      store.commit("setSearchValue", "");
     };
 
     const first = (e) => {
