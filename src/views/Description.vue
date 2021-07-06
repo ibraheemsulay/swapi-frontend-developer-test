@@ -269,6 +269,11 @@ export default {
       }
       @media (max-width: 700px) {
         margin-top: 20px;
+        width: 60%;
+      }
+      @media (max-width: 500px) {
+        margin-top: 20px;
+        width: 70%;
       }
     }
 
@@ -280,11 +285,6 @@ export default {
       display: flex;
       justify-content: space-between;
       margin-top: 3em;
-      @media (max-width: 400px) {
-        display: block;
-        text-align: center;
-        margin-left: 0;
-      }
 
       .item__name {
         display: flex;

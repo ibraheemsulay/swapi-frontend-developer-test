@@ -64,7 +64,7 @@ body {
   width: 100%;
   height: 100vh;
   .logo {
-    width: 100px;
+    width: 150px;
     height: auto;
     animation-name: fade;
     animation-iteration-count: infinite;
