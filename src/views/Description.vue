@@ -453,6 +453,7 @@ export default {
 
       button {
         text-transform: capitalize;
+        margin-left: 2em;
         font-size: 1.3rem;
         font-weight: bolder;
         border: 1px solid #3333334d;
@@ -465,6 +466,9 @@ export default {
 
         @media (max-width: 768px) {
           width: 70vw;
+        }
+        @media (max-width: 600px) {
+          margin-left: 0;
         }
       }
       button:hover {
