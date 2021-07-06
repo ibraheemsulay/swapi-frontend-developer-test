@@ -117,6 +117,7 @@ export default {
     justify-content: center;
     list-style-type: none;
     margin-bottom: 2em;
+    padding: 0;
     li {
       margin: 0 0.5em;
       button {
@@ -127,6 +128,9 @@ export default {
       .first {
         background: #000;
       }
+    }
+    li:nth-of-type(1) {
+      margin-left: 0;
     }
   }
 

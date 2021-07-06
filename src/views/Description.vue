@@ -261,7 +261,7 @@ export default {
       margin-left: auto;
       width: 40%;
       height: 50%;
-      overflow: hidden;
+
       img {
         width: 100%;
         height: 300px;
@@ -432,6 +432,7 @@ export default {
       justify-content: center;
       list-style-type: none;
       margin-bottom: 2em;
+      padding: 0;
       li {
         margin: 0 0.5em;
         button {
@@ -443,6 +444,9 @@ export default {
           background: #000;
         }
       }
+      li:nth-of-type(1) {
+        margin-left: 0;
+      }
     }
 
     &__button {
@@ -453,7 +457,6 @@ export default {
 
       button {
         text-transform: capitalize;
-        margin-left: 2em;
         font-size: 1.3rem;
         font-weight: bolder;
         border: 1px solid #3333334d;
@@ -466,9 +469,6 @@ export default {
 
         @media (max-width: 768px) {
           width: 70vw;
-        }
-        @media (max-width: 600px) {
-          margin-left: 0;
         }
       }
       button:hover {
