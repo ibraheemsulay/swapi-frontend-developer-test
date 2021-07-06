@@ -3,7 +3,14 @@
     <div v-show="display === 'grid'" class="list-item__image">
       <img :src="imageLink" :alt="name" />
     </div>
-    <div class="list-item__body">
+    <div
+      class="list-item__body"
+      :style="
+        display === 'grid'
+          ? { transform: 'translate(8px, -6px)' }
+          : { transform: 'translate(0, 0)' }
+      "
+    >
       <div class="list-item__title">
         <h4>{{ name }}</h4>
       </div>
@@ -17,7 +24,14 @@
         }"
         class="list-item__button"
       >
-        <button @click="resetSearchBar">
+        <button
+          @click="resetSearchBar"
+          :style="
+            display === 'grid'
+              ? { border: '2px', background: '#d8d8d8' }
+              : { border: 'none', background: 'transparent' }
+          "
+        >
           Read more <img src="@/assets/Images/right-arrow.svg" alt="arrow" />
         </button>
       </router-link>
