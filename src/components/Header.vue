@@ -62,7 +62,7 @@ export default {
 <style lang="scss" scoped>
 .hero {
   position: relative;
-  min-height: 600px;
+  min-height: 80vmin;
 
   &__banner {
     object-fit: cover;
@@ -168,10 +168,6 @@ export default {
       max-width: 90%;
       font-size: 1rem;
     }
-  }
-
-  @media (max-width: 450px) {
-    min-height: 450px;
   }
 }
 

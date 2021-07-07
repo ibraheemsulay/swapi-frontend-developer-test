@@ -12,7 +12,6 @@ export default createStore({
     searchValue: "",
     planetSlider: [],
     paginationItem: "",
-    recentlyViewed: [],
   },
 
   //GETTERS
@@ -55,7 +54,6 @@ export default createStore({
         )
         .slice(0, 3),
     paginationItem: (state) => state.paginationItem,
-    recentlyViewed: (state) => state.recentViewed,
   },
 
   //ACTIONS
@@ -111,25 +109,6 @@ export default createStore({
         .slice(6, 9);
       commit("setPlanetsChange", value);
     },
-
-    recentyViewed: ({ state, commit }, { id }) => {
-      let value = state.recentlyViewed;
-      if (id == 1) {
-        value = state.recentlyViewed.slice(0, 3);
-      }
-      if (id == 2) {
-        value = state.recentlyViewed.slice(3, 6);
-      }
-      if (id == 3) {
-        value = state.recentlyViewed.slice(6, 9);
-      }
-      commit("setRecentlyViewed", value);
-    },
-    addToRecentlyViewed: ({ state, commit }, { newItem }) => {
-      let list = state.recentlyViewed.slice(1, 9);
-      list = [...list, newItem];
-      commit("setRecentlyViewed", list);
-    },
   },
 
   //MUTATIONS
@@ -146,6 +125,5 @@ export default createStore({
       (state.planetSlider = [...state.planetSlider, ...val]),
     setPlanetsChange: (state, val) => (state.planetSlider = [...val]),
     setPaginationItem: (state, val) => (state.paginationItem = [...val]),
-    setRecentlyViewed: (state, val) => (state.recentlyViewed = [...val]),
   },
 });

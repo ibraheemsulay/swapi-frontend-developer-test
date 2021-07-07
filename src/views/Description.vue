@@ -141,7 +141,7 @@ export default {
     const navigateNext = () => {
       data.imageLink =
         data.images[Math.floor(Math.random() * data.images.length)];
-      if (data.counter == data.characters.length) data.counter = 0;
+      if (data.counter == data.characters.length) return;
       if (data.counter < data.characters.length) {
         router.push({
           name: "Description",
@@ -158,7 +158,7 @@ export default {
     const navigatePrevious = () => {
       data.imageLink =
         data.images[Math.floor(Math.random() * data.images.length)];
-      if (data.counter < 0) data.counter = data.characters.length - 1;
+      if (data.counter < 0) return;
       if (data.counter > 0) {
         router.push({
           name: "Description",
@@ -209,7 +209,7 @@ export default {
   padding-bottom: 5em;
   .hero {
     position: relative;
-    min-height: 600px;
+    min-height: 80vmin;
 
     &__banner {
       object-fit: cover;
