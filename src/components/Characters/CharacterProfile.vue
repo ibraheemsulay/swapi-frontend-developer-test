@@ -54,6 +54,7 @@ export default {
   &.grid {
     flex-basis: 30%;
     margin-bottom: 3rem;
+    justify-content: center;
 
     &.left {
       display: flex;
