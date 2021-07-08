@@ -120,7 +120,6 @@ export default createStore({
       list = [...new Set(list)];
       if (list.length > 8) {
         list = [...list.slice(1, 9), ...newItem];
-        console.log(state.recentlyViewed);
       } else {
         list = [...list, ...newItem];
       }

@@ -138,16 +138,14 @@ export default {
     watch(data.item, (currentValue, oldValue) => {
       if (currentValue !== oldValue) {
         store.commit("setRecentlyViewed", { newItem: data.item });
-        console.log(store.getters.RecentlyViewed);
       }
-      console.log(store.getters.RecentlyViewed);
     });
 
     const navigateNext = () => {
-      data.imageLink =
-        data.images[Math.floor(Math.random() * data.images.length)];
       if (data.counter == data.characters.length) return;
       if (data.counter < data.characters.length) {
+        data.imageLink =
+          data.images[Math.floor(Math.random() * data.images.length)];
         router.push({
           name: "Description",
           params: {
@@ -156,6 +154,7 @@ export default {
           },
         });
       }
+      document.getElementsByClassName("third")[0].style.background = "black";
       document.getElementsByClassName("second")[0].style.background = "white";
       document.getElementsByClassName("first")[0].style.background = "white";
       store.dispatch("recentlyViewed", { newItem: data.item });
@@ -165,10 +164,10 @@ export default {
     };
 
     const navigatePrevious = () => {
-      data.imageLink =
-        data.images[Math.floor(Math.random() * data.images.length)];
       if (data.counter < 0) return;
       if (data.counter > 0) {
+        data.imageLink =
+          data.images[Math.floor(Math.random() * data.images.length)];
         router.push({
           name: "Description",
           params: {
@@ -177,6 +176,7 @@ export default {
           },
         });
       }
+      document.getElementsByClassName("third")[0].style.background = "black";
       document.getElementsByClassName("second")[0].style.background = "white";
       document.getElementsByClassName("first")[0].style.background = "white";
       store.dispatch("recentlyViewed", { newItem: data.item });
