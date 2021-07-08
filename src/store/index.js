@@ -121,7 +121,8 @@ export default createStore({
       if (list.length > 8) {
         list = [...list.slice(1, 9), ...newItem];
       } else {
-        list = [...list, ...newItem];
+        const randomVal = state.characters[20];
+        list = [...list, randomVal];
       }
       commit("setRecentlyViewed", list);
     },
