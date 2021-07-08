@@ -82,12 +82,9 @@
         <h2 class="recently-viewed__title">Recently Viewed</h2>
         <div class="view-card">
           <RecentlyViewed
-            v-for="planet in displayPlanets"
-            :key="planet.name"
-            :imageLink="image[Math.floor(Math.random() * 3)]"
-            :name="planet.name"
-            :temperature="planet.temperature"
-            :population="planet.population"
+            v-for="item in history"
+            :item="item"
+            :key="item.name"
           />
         </div>
         <ul class="slider">
@@ -106,7 +103,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from "vue";
+import { reactive, toRefs, computed, watch } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import RecentlyViewed from "../components/Partials/RecentlyViewed.vue";
@@ -120,7 +117,7 @@ export default {
     const router = useRouter();
     const store = useStore();
     const data = reactive({
-      displayPlanets: computed(() => store.getters.planetSlider),
+      history: computed(() => store.getters.history),
       planets: computed(() => store.getters.popularPlanets),
       image: computed(() => store.state.images.planets),
       imageLink: store.state.images[`${props.category}`][0],
@@ -138,6 +135,14 @@ export default {
       images: computed(() => store.state.images[`${props.category}`]),
     });
 
+    watch(data.item, (currentValue, oldValue) => {
+      if (currentValue !== oldValue) {
+        store.commit("setRecentlyViewed", { newItem: data.item });
+        console.log(store.getters.RecentlyViewed);
+      }
+      console.log(store.getters.RecentlyViewed);
+    });
+
     const navigateNext = () => {
       data.imageLink =
         data.images[Math.floor(Math.random() * data.images.length)];
@@ -151,6 +156,10 @@ export default {
           },
         });
       }
+      document.getElementsByClassName("second")[0].style.background = "white";
+      document.getElementsByClassName("first")[0].style.background = "white";
+      store.dispatch("recentlyViewed", { newItem: data.item });
+      store.commit("setHistory", store.state.recentlyViewed.slice(6, 9));
 
       ++data.counter;
     };
@@ -168,25 +177,32 @@ export default {
           },
         });
       }
+      document.getElementsByClassName("second")[0].style.background = "white";
+      document.getElementsByClassName("first")[0].style.background = "white";
+      store.dispatch("recentlyViewed", { newItem: data.item });
+      store.commit("setHistory", store.state.recentlyViewed.slice(6, 9));
       --data.counter;
     };
 
     const first = (e) => {
-      store.dispatch("firstSlide");
+      const view = store.getters.recentlyViewed.slice(0, 3);
+      store.commit("setHistory", view);
       e.target.style.backgroundColor = "black";
       document.getElementsByClassName("second")[0].style.background = "white";
       document.getElementsByClassName("third")[0].style.background = "white";
     };
 
     const second = (e) => {
-      store.dispatch("secondSlide");
+      const view = store.getters.recentlyViewed.slice(3, 6);
+      store.commit("setHistory", view);
       e.target.style.backgroundColor = "black";
       document.getElementsByClassName("first")[0].style.background = "white";
       document.getElementsByClassName("third")[0].style.background = "white";
     };
 
     const third = (e) => {
-      store.dispatch("thirdSlide");
+      const view = store.getters.recentlyViewed.slice(6, 9);
+      store.commit("setHistory", view);
       e.target.style.backgroundColor = "black";
       document.getElementsByClassName("second")[0].style.background = "white";
       document.getElementsByClassName("first")[0].style.background = "white";
@@ -441,7 +457,7 @@ export default {
           border-radius: 8px;
           background: #fff;
         }
-        .first {
+        .third {
           background: #000;
         }
       }

@@ -8,19 +8,8 @@
         <h4>{{ name }}</h4>
       </div>
       <p class="list-item__description">
-        {{ name.split(" ")[0] }} {{ characterDescription }}
+        {{ characterDescription }}
       </p>
-      <router-link
-        :to="{
-          name: 'Description',
-          params: { category: 'planets', name: name },
-        }"
-        class="list-item__button"
-      >
-        <button @click="resetSearchBar">
-          Read more <img src="@/assets/Images/right-arrow.svg" alt="arrow" />
-        </button>
-      </router-link>
     </div>
   </div>
 </template>
@@ -30,22 +19,46 @@ import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  props: ["imageLink", "name", "temperature", "population"],
+  props: ["item"],
 
   setup(props) {
     const store = useStore();
     const data = reactive({
-      characterDescription: `${props.name} has a temperature of ${props.temperature}, and a population of ${props.population}`,
+      name: "",
+      imageLink: "",
+      characterDescription: "",
       recentlyViewed: computed(() => store.getters.recentlyViewed),
     });
 
-    const resetSearchBar = () => {
-      store.commit("setSearchValue", "");
-    };
+    (function () {
+      data.name = props.item.name;
+      const checkPlanets = store.getters.planets.indexOf(props.item) !== -1;
+      const checkStarships = store.getters.starships.indexOf(props.item) !== -1;
+      const checkCharacters =
+        store.getters.characters.indexOf(props.item) !== -1;
+      if (checkPlanets) {
+        data.imageLink =
+          store.state.images.planets[Math.floor(Math.random() * 3)];
+        data.characterDescription = `${props.item.name} has a temperature of ${props.item.temperature}, and a population of ${props.item.population}`;
+      }
+      if (checkStarships) {
+        data.imageLink =
+          store.state.images.starships[Math.floor(Math.random() * 3)];
+        data.characterDescription = `${props.item.name} is of the ${props.item.model} model, and has a cargo of
+        ${props.item.cargo_capacity}`;
+      }
+      if (checkCharacters) {
+        data.imageLink =
+          store.state.images.characters[Math.floor(Math.random() * 3)];
+        data.characterDescription = `${props.item.name} was born in the year ${
+          props.item.birthyear
+        }, and is a
+        ${props.item.gender === "n/a" ? "robot" : props.item.gender}`;
+      }
+    })();
 
     return {
       ...toRefs(data),
-      resetSearchBar,
     };
   },
 };
