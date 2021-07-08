@@ -116,13 +116,12 @@ export default createStore({
       commit("setPlanetsChange", value);
     },
     recentlyViewed: ({ state, commit }, { newItem }) => {
-      let list = state.recentlyViewed;
-      list = [...new Set(list)];
+      let list = [...new Set(state.recentlyViewed)];
       if (list.length > 8) {
         list = [...list.slice(1, 9), ...newItem];
       } else {
-        const randomVal = state.characters[20];
-        list = [...list, randomVal];
+        const randomVal = state.characters[Math.round(Math.random() * 10) + 30];
+        list = [randomVal, ...list];
       }
       commit("setRecentlyViewed", list);
     },
