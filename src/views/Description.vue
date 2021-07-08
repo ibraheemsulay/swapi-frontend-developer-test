@@ -153,14 +153,13 @@ export default {
             category: props.category,
           },
         });
+        ++data.counter;
+        document.getElementsByClassName("third")[0].style.background = "black";
+        document.getElementsByClassName("second")[0].style.background = "white";
+        document.getElementsByClassName("first")[0].style.background = "white";
+        store.dispatch("recentlyViewed", { newItem: data.item });
+        store.commit("setHistory", store.state.recentlyViewed.slice(6, 9));
       }
-      document.getElementsByClassName("third")[0].style.background = "black";
-      document.getElementsByClassName("second")[0].style.background = "white";
-      document.getElementsByClassName("first")[0].style.background = "white";
-      store.dispatch("recentlyViewed", { newItem: data.item });
-      store.commit("setHistory", store.state.recentlyViewed.slice(6, 9));
-
-      ++data.counter;
     };
 
     const navigatePrevious = () => {
@@ -175,13 +174,13 @@ export default {
             category: props.category,
           },
         });
+        --data.counter;
+        document.getElementsByClassName("third")[0].style.background = "black";
+        document.getElementsByClassName("second")[0].style.background = "white";
+        document.getElementsByClassName("first")[0].style.background = "white";
+        store.dispatch("recentlyViewed", { newItem: data.item });
+        store.commit("setHistory", store.state.recentlyViewed.slice(6, 9));
       }
-      document.getElementsByClassName("third")[0].style.background = "black";
-      document.getElementsByClassName("second")[0].style.background = "white";
-      document.getElementsByClassName("first")[0].style.background = "white";
-      store.dispatch("recentlyViewed", { newItem: data.item });
-      store.commit("setHistory", store.state.recentlyViewed.slice(6, 9));
-      --data.counter;
     };
 
     const first = (e) => {
