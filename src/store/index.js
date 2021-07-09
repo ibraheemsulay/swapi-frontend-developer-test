@@ -116,10 +116,13 @@ export default createStore({
       commit("setPlanetsChange", value);
     },
     recentlyViewed: ({ state, commit }, { newItem }) => {
+      if (state.recentlyViewed.indexOf(newItem) != -1) return;
       let list = [...new Set(state.recentlyViewed)];
-      if (list.length > 8) {
+      const check = list.indexOf(newItem) !== -1 && undefined;
+      if (list.length > 8 && !check) {
         list = [...list.slice(1, 9), ...newItem];
-      } else {
+        commit("setHistory", list.slice(6, 9));
+      } else if (!check) {
         const randomVal = state.characters[Math.round(Math.random() * 10) + 30];
         list = [randomVal, ...list];
       }

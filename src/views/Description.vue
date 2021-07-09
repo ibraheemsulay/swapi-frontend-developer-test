@@ -117,7 +117,7 @@ export default {
     const router = useRouter();
     const store = useStore();
     const data = reactive({
-      history: computed(() => store.getters.history),
+      history: computed(() => store.getters.history.slice(0, 3)),
       planets: computed(() => store.getters.popularPlanets),
       image: computed(() => store.state.images.planets),
       imageLink: store.state.images[`${props.category}`][0],
@@ -135,51 +135,59 @@ export default {
       images: computed(() => store.state.images[`${props.category}`]),
     });
 
-    watch(data.item, (currentValue, oldValue) => {
-      if (currentValue !== oldValue) {
-        store.commit("setRecentlyViewed", { newItem: data.item });
+    watch(
+      () => [...props.name],
+      (currentValue, oldValue) => {
+        data.counter = data.characters.indexOf(currentValue.join(""));
+
+        if (
+          store.getters.recentlyViewed.indexOf(data.newItem) == -1 &&
+          oldValue.join("") !== currentValue.join("")
+        ) {
+          store.dispatch("recentlyViewed", { newItem: data.item });
+        }
       }
-    });
+    );
+    (function () {
+      data.counter = data.characters.indexOf(props.name);
+    })();
 
     const navigateNext = () => {
-      if (data.counter == data.characters.length) return;
-      if (data.counter < data.characters.length) {
+      const count = data.counter + 1;
+      if (count == data.characters.length) return;
+      if (count < data.characters.length) {
         data.imageLink =
           data.images[Math.floor(Math.random() * data.images.length)];
         router.push({
           name: "Description",
           params: {
-            name: data.characters[data.counter],
+            name: data.characters[count],
             category: props.category,
           },
         });
-        ++data.counter;
         document.getElementsByClassName("third")[0].style.background = "black";
         document.getElementsByClassName("second")[0].style.background = "white";
         document.getElementsByClassName("first")[0].style.background = "white";
-        store.dispatch("recentlyViewed", { newItem: data.item });
-        store.commit("setHistory", store.state.recentlyViewed.slice(6, 9));
       }
     };
 
     const navigatePrevious = () => {
-      if (data.counter < 0) return;
-      if (data.counter > 0) {
+      const count = data.counter - 1;
+      if (count < 0) return;
+      if (count >= 0) {
         data.imageLink =
           data.images[Math.floor(Math.random() * data.images.length)];
         router.push({
           name: "Description",
           params: {
-            name: data.characters[data.counter],
+            name: data.characters[count],
             category: props.category,
           },
         });
-        --data.counter;
+
         document.getElementsByClassName("third")[0].style.background = "black";
         document.getElementsByClassName("second")[0].style.background = "white";
         document.getElementsByClassName("first")[0].style.background = "white";
-        store.dispatch("recentlyViewed", { newItem: data.item });
-        store.commit("setHistory", store.state.recentlyViewed.slice(6, 9));
       }
     };
 
