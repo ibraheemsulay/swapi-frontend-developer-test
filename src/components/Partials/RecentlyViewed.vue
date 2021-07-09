@@ -32,6 +32,13 @@ export default {
 
     (function () {
       data.name = props.item.name;
+      const planetNames = store.getters.planets.map((planet) => planet.name);
+      if (planetNames.indexOf(props.item.name) !== -1) {
+        data.imageLink =
+          store.state.images.planets[Math.floor(Math.random() * 3)];
+        data.characterDescription = `${props.item.name} has a temperature of ${props.item.temperature}, and a population of ${props.item.population}`;
+      }
+
       const checkPlanets = store.getters.planets.indexOf(props.item) !== -1;
       const checkStarships = store.getters.starships.indexOf(props.item) !== -1;
       const checkCharacters =

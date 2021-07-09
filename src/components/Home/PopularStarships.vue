@@ -11,6 +11,7 @@
         :cargo="starship.cargo_capacity"
         :model="starship.model"
         :display="display"
+        :item="starship"
       />
     </div>
     <div class="section__button">

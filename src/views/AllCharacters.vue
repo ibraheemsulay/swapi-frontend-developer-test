@@ -28,6 +28,7 @@
         :birthyear="character.birth_year"
         :gender="character.gender"
         :display="display"
+        :item="character"
       />
     </div>
     <Pagination :category="category" :paginationItem="characters" />
@@ -107,7 +108,7 @@ export default {
 
   .filters {
     display: flex;
-    justify-content: start;
+
     margin: 3em auto 5em auto;
     label {
       margin: 0 auto;

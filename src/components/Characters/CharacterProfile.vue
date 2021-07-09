@@ -27,7 +27,7 @@ import { reactive, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  props: ["imageLink", "name", "birthyear", "gender", "display"],
+  props: ["imageLink", "name", "birthyear", "gender", "display", "item"],
 
   setup(props) {
     const store = useStore();
@@ -39,6 +39,10 @@ export default {
 
     const resetSearchBar = () => {
       store.commit("setSearchValue", "");
+      const item = [props.item];
+      if (store.getters.recentlyViewed.indexOf(...item) == -1) {
+        store.dispatch("recentlyViewed", { newItem: item });
+      }
     };
 
     return {

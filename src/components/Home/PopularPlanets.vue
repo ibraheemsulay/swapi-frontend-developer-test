@@ -12,6 +12,7 @@
         :name="planet.name"
         :temperature="planet.temperature"
         :population="planet.population"
+        :item="planet"
       />
     </div>
     <ul class="slider">

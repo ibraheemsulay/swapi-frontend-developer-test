@@ -139,9 +139,10 @@ export default {
       () => [...props.name],
       (currentValue, oldValue) => {
         data.counter = data.characters.indexOf(currentValue.join(""));
+        const item = data.item;
 
         if (
-          store.getters.recentlyViewed.indexOf(data.newItem) == -1 &&
+          store.getters.recentlyViewed.indexOf(...item) == -1 &&
           oldValue.join("") !== currentValue.join("")
         ) {
           store.dispatch("recentlyViewed", { newItem: data.item });

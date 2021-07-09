@@ -19,6 +19,7 @@
         :cargo="starship.cargo_capacity"
         :model="starship.model"
         :display="display"
+        :item="starship"
       />
     </div>
     <Pagination :category="category" :paginationItem="starships" />
@@ -87,7 +88,7 @@ export default {
 
   .filters {
     display: flex;
-    justify-content: start;
+
     margin: 3em auto 5em auto;
     label {
       margin: 0 auto;

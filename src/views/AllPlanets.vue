@@ -19,6 +19,7 @@
         :temperature="planet.temperature"
         :population="planet.population"
         :display="display"
+        :item="planet"
       />
     </div>
     <Pagination :category="category" :paginationItem="planets" />
@@ -87,7 +88,7 @@ export default {
 
   .filters {
     display: flex;
-    justify-content: start;
+
     margin: 3em auto 5em auto;
     label {
       margin: 0 auto;

@@ -10,6 +10,7 @@
         :name="character.name"
         :birthyear="character.birth_year"
         :gender="character.gender"
+        :item="character"
         display="grid"
       />
     </div>
