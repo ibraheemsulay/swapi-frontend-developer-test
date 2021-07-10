@@ -41,7 +41,8 @@ export default {
       const recentlyViewedNames = store.getters.recentlyViewed.map(
         (item) => item.name
       );
-      if (recentlyViewedNames.indexOf(props.name) === -1) {
+      const checkAgain = recentlyViewedNames.includes(props.name);
+      if (recentlyViewedNames.indexOf(props.name) === -1 && !checkAgain) {
         store.dispatch("recentlyViewed", { newItem: item });
       }
     };

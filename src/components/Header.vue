@@ -62,7 +62,7 @@ export default {
 <style lang="scss" scoped>
 .hero {
   position: relative;
-  min-height: 80vmin;
+  min-height: 90vmin;
   margin-bottom: 3em;
 
   &__banner {

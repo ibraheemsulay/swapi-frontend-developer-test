@@ -233,7 +233,7 @@ export default {
   padding-bottom: 5em;
   .hero {
     position: relative;
-    min-height: 80vmin;
+    min-height: 90vmin;
     margin-bottom: 5em;
 
     &__banner {
