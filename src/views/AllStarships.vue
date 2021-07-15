@@ -67,7 +67,7 @@ export default {
 
 <style lang="scss" scoped>
 .section {
-  padding: 2rem 3rem;
+  padding: 2rem 3rem 8rem 2rem;
 
   &__title {
     position: relative;
@@ -127,14 +127,6 @@ export default {
       border-radius: 0.3rem;
       cursor: pointer;
       transition: all ease-in 0.1s;
-
-      @media (min-width: 768px) {
-        min-width: 500px;
-      }
-
-      @media (max-width: 768px) {
-        width: 70vw;
-      }
     }
     button:hover {
       background: #b6b5b585;

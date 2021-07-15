@@ -229,7 +229,7 @@ export default {
 
 <style lang="scss" scoped>
 .description {
-  padding-bottom: 5em;
+  padding-bottom: 8rem;
   .hero {
     position: relative;
     min-height: 90vmin;
