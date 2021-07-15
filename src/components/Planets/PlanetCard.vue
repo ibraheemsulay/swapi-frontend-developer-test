@@ -29,15 +29,8 @@ export default {
 
     const resetSearchBar = () => {
       store.commit("setSearchValue", "");
-      const item = [props.item];
-      const recentlyViewedNames = store.getters.recentlyViewed.map(
-        (item) => item.name
-      );
-      const checkAgain = recentlyViewedNames.includes(props.name);
 
-      if (recentlyViewedNames.indexOf(props.name) === -1 && !checkAgain) {
-        store.dispatch("recentlyViewed", { newItem: item });
-      }
+      store.dispatch("recentlyViewed", { newItem: [props.item] });
     };
 
     return {

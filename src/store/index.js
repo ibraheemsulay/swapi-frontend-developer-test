@@ -115,17 +115,16 @@ export default createStore({
         .slice(6, 9);
       commit("setPlanetsChange", value);
     },
+
     recentlyViewed: ({ state, commit }, { newItem }) => {
-      if (state.recentlyViewed.indexOf(...newItem) != -1) return;
+      const recentlyViewedNamesArray = state.recentlyViewed.map(
+        (item) => item.name
+      );
+      if (recentlyViewedNamesArray.includes(newItem[0].name)) return;
+
       let list = [...new Set(state.recentlyViewed)];
-      const check = list.indexOf(...newItem) !== -1 && undefined;
-      if (list.length > 8 && !check) {
-        list = [...list.slice(1, 9), ...newItem];
-        commit("setHistory", list.slice(6, 9));
-      } else if (!check) {
-        const randomVal = state.characters[Math.round(Math.random() * 10) + 30];
-        list = [randomVal, ...list];
-      }
+      list = [...list.slice(1, 9), ...newItem];
+      commit("setHistory", list.slice(6, 9));
       commit("setRecentlyViewed", list);
     },
   },

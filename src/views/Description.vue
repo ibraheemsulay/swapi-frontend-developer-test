@@ -139,12 +139,11 @@ export default {
       () => [...props.name],
       (currentValue, oldValue) => {
         data.counter = data.characters.indexOf(currentValue.join(""));
-        const item = data.item;
-
-        if (
-          store.getters.recentlyViewed.indexOf(...item) == -1 &&
-          oldValue.join("") !== currentValue.join("")
-        ) {
+        const recentlyViewedNames = store.getters.recentlyViewed.map(
+          (item) => item.name
+        );
+        const checkNames = recentlyViewedNames.includes(data.item[0].name);
+        if (!checkNames && oldValue.join("") !== currentValue.join("")) {
           store.dispatch("recentlyViewed", { newItem: data.item });
         }
       }
@@ -478,7 +477,6 @@ export default {
       text-align: center;
       margin: 0 auto;
       padding-bottom: 0.5em;
-      border-bottom: 1px solid #3333334d;
 
       button {
         text-transform: capitalize;

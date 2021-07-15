@@ -54,14 +54,9 @@ export default {
 
     const resetSearchBar = () => {
       store.commit("setSearchValue", "");
-      const item = [props.item];
-      if (store.getters.recentlyViewed.indexOf(...item) == -1) {
-        store.dispatch("recentlyViewed", { newItem: item });
-      }
+      store.dispatch("recentlyViewed", { newItem: [props.item] });
     };
-    // (function () {
-    //   console.log(props.item);
-    // })();
+
     return {
       ...toRefs(data),
       resetSearchBar,

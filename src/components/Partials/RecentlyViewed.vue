@@ -29,7 +29,6 @@ export default {
       characterDescription: "",
       recentlyViewed: computed(() => store.getters.recentlyViewed),
     });
-
     (function () {
       data.name = props.item.name;
       const planetNames = store.getters.planets.map((planet) => planet.name);
