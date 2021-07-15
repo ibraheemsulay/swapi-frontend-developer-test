@@ -2,7 +2,7 @@
   <header class="hero">
     <img class="hero__banner" :src="heroBanner" alt="Hero banner" />
     <nav class="hero__navbar">
-      <router-link :to="{ name: 'Home' }">
+      <router-link @click="resetSearchBar" :to="{ name: 'Home' }">
         <img :src="logo" alt="Star wars logo" class="hero__logo" />
       </router-link>
     </nav>
@@ -52,8 +52,11 @@ export default {
       }
     );
 
+    const resetSearchBar = () => store.commit("setSearchValue", "");
+
     return {
       ...toRefs(data),
+      resetSearchBar,
     };
   },
 };
