@@ -35,11 +35,8 @@ export default {
       characterDescription: `${props.name} has a temperature of ${props.temperature}, and a population of ${props.population}`,
     });
 
-    const resetSearchBar = () => {
-      store.commit("setSearchValue", "");
+    const resetSearchBar = () =>
       store.dispatch("recentlyViewed", { newItem: [props.item] });
-    };
-
     return {
       ...toRefs(data),
       resetSearchBar,

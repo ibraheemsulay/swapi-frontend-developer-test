@@ -16,7 +16,7 @@
     </div>
     <div class="section__button">
       <router-link :to="{ name: 'AllCharacters' }">
-        <button type="button" @click="resetSearchBar">View All</button>
+        <button type="button">View All</button>
       </router-link>
     </div>
   </section>
@@ -38,13 +38,8 @@ export default {
       imageLink: computed(() => store.state.images.characters),
     });
 
-    const resetSearchBar = () => {
-      store.commit("setSearchValue", "");
-    };
-
     return {
       ...toRefs(data),
-      resetSearchBar,
     };
   },
 };

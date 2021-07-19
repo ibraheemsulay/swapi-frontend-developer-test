@@ -43,10 +43,6 @@ export default {
       imageLink: computed(() => store.state.images.planets),
     });
 
-    const resetSearchBar = () => {
-      store.commit("setSearchValue", "");
-    };
-
     const first = (e) => {
       store.dispatch("firstSlide");
       e.target.style.backgroundColor = "black";
@@ -69,7 +65,6 @@ export default {
     };
     return {
       ...toRefs(data),
-      resetSearchBar,
       first,
       second,
       third,

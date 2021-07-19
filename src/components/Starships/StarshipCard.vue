@@ -52,11 +52,8 @@ export default {
       characterDescription: `is of the ${props.model} model, and has a cargo of ${props.cargo}`,
     });
 
-    const resetSearchBar = () => {
-      store.commit("setSearchValue", "");
+    const resetSearchBar = () =>
       store.dispatch("recentlyViewed", { newItem: [props.item] });
-    };
-
     return {
       ...toRefs(data),
       resetSearchBar,

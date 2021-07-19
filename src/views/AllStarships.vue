@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed, onMounted } from "vue";
+import { reactive, toRefs, computed, onMounted, onBeforeUnmount } from "vue";
 import { useStore } from "vuex";
 import StarshipCard from "../components/Starships/StarshipCard.vue";
 import Pagination from "../components/Partials/Pagination.vue";
@@ -57,6 +57,8 @@ export default {
         store.commit("setPaginationItem", data.starships.slice(0, 6));
       })();
     });
+
+    onBeforeUnmount(() => store.commit("setSearchValue", ""));
 
     return {
       ...toRefs(data),

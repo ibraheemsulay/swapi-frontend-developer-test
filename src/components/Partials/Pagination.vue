@@ -42,15 +42,20 @@ export default {
         store.commit("setPaginationItem", currentValue.slice(0, 6));
         data.current = currentValue.slice(0, 6).length;
         data.total = data.paginationItem.length;
-        data.count = 1;
         document.getElementById("previous").disabled = true;
         document.getElementById("next").disabled = false;
       }
     );
 
     //PAGINATION NEXT BUTTON
-    const next = () => {
-      ++data.count;
+    const next = (e) => {
+      const element = e.currentTarget;
+      element.clicks = (element.clicks || 0) + 1;
+      if (element.clicks == 1) {
+        data.count = 1;
+      } else {
+        ++data.count;
+      }
       document.getElementById("previous").disabled = false;
       let val = 6 * data.count;
       if (val >= data.paginationItem.length) {
@@ -83,7 +88,7 @@ export default {
       } else {
         const list = data.paginationItem.slice(val, val + 6);
         store.commit("setPaginationItem", list);
-        data.current = data.paginationItem.indexOf(list[0]) + 1;
+        data.current = data.paginationItem.indexOf(list[list.length - 1]) + 1;
       }
     };
 

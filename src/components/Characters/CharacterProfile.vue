@@ -37,10 +37,8 @@ export default {
       characters: computed(() => store.getters.characters),
     });
 
-    const resetSearchBar = () => {
-      store.commit("setSearchValue", "");
+    const resetSearchBar = () =>
       store.dispatch("recentlyViewed", { newItem: [props.item] });
-    };
 
     return {
       ...toRefs(data),
