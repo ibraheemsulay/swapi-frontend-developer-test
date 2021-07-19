@@ -175,9 +175,14 @@ export default {
             category: props.category,
           },
         });
-        document.getElementsByClassName("third")[0].style.background = "black";
-        document.getElementsByClassName("second")[0].style.background = "white";
-        document.getElementsByClassName("first")[0].style.background = "white";
+        if (data.recentlyViewedLength > 6) {
+          document.getElementsByClassName("third")[0].style.background =
+            "black";
+          document.getElementsByClassName("second")[0].style.background =
+            "white";
+          document.getElementsByClassName("first")[0].style.background =
+            "white";
+        }
       }
     };
 
@@ -194,10 +199,14 @@ export default {
             category: props.category,
           },
         });
-
-        document.getElementsByClassName("third")[0].style.background = "black";
-        document.getElementsByClassName("second")[0].style.background = "white";
-        document.getElementsByClassName("first")[0].style.background = "white";
+        if (data.recentlyViewedLength > 6) {
+          document.getElementsByClassName("third")[0].style.background =
+            "black";
+          document.getElementsByClassName("second")[0].style.background =
+            "white";
+          document.getElementsByClassName("first")[0].style.background =
+            "white";
+        }
       }
     };
 
@@ -205,8 +214,11 @@ export default {
       const view = store.getters.recentlyViewed.slice(0, 3);
       store.commit("setHistory", view);
       e.target.style.backgroundColor = "black";
-      document.getElementsByClassName("second")[0].style.background = "white";
-      document.getElementsByClassName("third")[0].style.background = "white";
+
+      if (data.recentlyViewedLength > 3)
+        document.getElementsByClassName("second")[0].style.background = "white";
+      if (data.recentlyViewedLength > 6)
+        document.getElementsByClassName("third")[0].style.background = "white";
     };
 
     const second = (e) => {
@@ -214,7 +226,8 @@ export default {
       store.commit("setHistory", view);
       e.target.style.backgroundColor = "black";
       document.getElementsByClassName("first")[0].style.background = "white";
-      document.getElementsByClassName("third")[0].style.background = "white";
+      if (data.recentlyViewedLength > 6)
+        document.getElementsByClassName("third")[0].style.background = "white";
     };
 
     const third = (e) => {
