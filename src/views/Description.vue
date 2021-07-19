@@ -160,7 +160,6 @@ export default {
     );
     (function () {
       data.counter = data.characters.indexOf(props.name);
-      console.log(data.historyLength);
     })();
 
     const navigateNext = () => {
