@@ -88,9 +88,18 @@
           />
         </div>
         <ul class="slider">
-          <li><button class="first" @click="first"></button></li>
-          <li><button class="second" @click="second"></button></li>
-          <li><button class="third" @click="third"></button></li>
+          <li v-if="recentlyViewedLength === 0" style="font-size: 1.5em">
+            No Recently Viewed Items
+          </li>
+          <li v-if="recentlyViewedLength > 0">
+            <button class="first" @click="first"></button>
+          </li>
+          <li v-if="recentlyViewedLength > 3">
+            <button class="second" @click="second"></button>
+          </li>
+          <li v-if="recentlyViewedLength > 6">
+            <button class="third" @click="third"></button>
+          </li>
         </ul>
       </div>
     </section>
@@ -117,7 +126,8 @@ export default {
     const router = useRouter();
     const store = useStore();
     const data = reactive({
-      history: computed(() => store.getters.history.slice(0, 3)),
+      recentlyViewedLength: computed(() => store.getters.recentlyViewed.length),
+      history: computed(() => store.getters.history.slice(-3, history.length)),
       planets: computed(() => store.getters.popularPlanets),
       image: computed(() => store.state.images.planets),
       imageLink: store.state.images[`${props.category}`][0],
@@ -150,6 +160,7 @@ export default {
     );
     (function () {
       data.counter = data.characters.indexOf(props.name);
+      console.log(data.historyLength);
     })();
 
     const navigateNext = () => {
@@ -463,9 +474,6 @@ export default {
           height: 15px;
           border-radius: 8px;
           background: #fff;
-        }
-        .third {
-          background: #000;
         }
       }
       li:nth-of-type(1) {

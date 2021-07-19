@@ -12,8 +12,8 @@ export default createStore({
     searchValue: "",
     planetSlider: [],
     paginationItem: "",
-    recentlyViewed: "",
-    history: "",
+    recentlyViewed: [],
+    history: [],
   },
 
   //GETTERS
@@ -63,7 +63,7 @@ export default createStore({
   //ACTIONS
   actions: {
     //FETCH DATA FROM API
-    fetchData: async ({ state, commit, dispatch }, { url, commitState }) => {
+    fetchData: async ({ commit, dispatch }, { url, commitState }) => {
       try {
         const response = await axios
           .get(url, {
@@ -77,13 +77,10 @@ export default createStore({
 
         if (response.next !== null)
           dispatch("fetchData", { url: response.next, commitState });
+        commit("setHasFetched", true);
       } catch (error) {
-        console.log(error);
-        commit("setHasFetched", false);
+        console.log(error.message);
       }
-      commit("setHasFetched", true);
-      commit("setRecentlyViewed", state.planets.slice(0, 9));
-      commit("setHistory", state.planets.slice(0, 3));
     },
 
     //SEARCH FILTER OPTION
@@ -121,11 +118,16 @@ export default createStore({
         (item) => item.name
       );
       if (recentlyViewedNamesArray.includes(newItem[0].name)) return;
-
       let list = [...new Set(state.recentlyViewed)];
-      list = [...list.slice(1, 9), ...newItem];
-      commit("setHistory", list.slice(6, 9));
-      commit("setRecentlyViewed", list);
+      if (list.length < 9) {
+        list = [...list, ...newItem];
+        commit("setHistory", list.slice(-3, list.length));
+        commit("setRecentlyViewed", list);
+      } else {
+        list = [...list.slice(1, 9), ...newItem];
+        commit("setHistory", list.slice(6, 9));
+        commit("setRecentlyViewed", list);
+      }
     },
   },
 

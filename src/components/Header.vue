@@ -66,7 +66,7 @@ export default {
 .hero {
   position: relative;
   min-height: 90vmin;
-  margin-bottom: 3em;
+  margin-bottom: 8rem;
 
   &__banner {
     object-fit: cover;
