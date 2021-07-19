@@ -88,7 +88,7 @@
           />
         </div>
         <ul class="slider">
-          <li v-if="recentlyViewedLength === 0" style="font-size: 1.5em">
+          <li v-if="recentlyViewedLength === 0" class="no-items">
             No Recently Viewed Items
           </li>
           <li v-if="recentlyViewedLength > 0">
@@ -490,6 +490,10 @@ export default {
       }
       li:nth-of-type(1) {
         margin-left: 0;
+      }
+      li.no-items {
+        font-size: 1.5em;
+        text-align: center;
       }
     }
 
