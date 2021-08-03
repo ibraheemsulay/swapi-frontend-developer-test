@@ -89,7 +89,9 @@ export default {
 
 <style lang="scss" scoped>
 .section {
-  padding: 2rem 3rem 8rem 2rem;
+  padding: 2rem 3rem 8rem 3rem;
+  max-width: 2000px;
+  margin: auto;
 
   &__title {
     position: relative;
@@ -109,13 +111,12 @@ export default {
   }
 
   .filters {
-    display: flex;
-
     margin: 3em auto 5em auto;
     label {
-      margin: 0 auto;
+      margin-right: 3rem;
       select {
-        margin-left: 1em;
+        margin-left: 1rem;
+        margin-top: 1rem;
         padding: 0.5em 0.5em 0.5em 0.2em;
         border-radius: 4px;
         border: 2px solid;

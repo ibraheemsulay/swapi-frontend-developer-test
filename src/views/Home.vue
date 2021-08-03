@@ -37,3 +37,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.home {
+  max-width: 2000px;
+  margin: auto;
+}
+</style>

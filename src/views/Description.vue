@@ -403,8 +403,10 @@ export default {
     }
   }
   .section {
+    max-width: 2000px;
+    margin: auto;
+
     padding: 2rem 3rem;
-    margin: 0 3rem;
     @media (max-width: 500px) {
       padding: 2rem 1rem;
     }

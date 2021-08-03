@@ -69,7 +69,9 @@ export default {
 
 <style lang="scss" scoped>
 .section {
-  padding: 2rem 3rem 8rem 2rem;
+  padding: 2rem 3rem 8rem 3rem;
+  max-width: 2000px;
+  margin: auto;
 
   &__title {
     position: relative;
