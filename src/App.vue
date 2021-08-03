@@ -1,8 +1,10 @@
 <template>
   <div v-if="hasFetched">
     <Header v-if="!$route.meta.hideHeader" />
-
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in"
+        ><component :is="Component" /> </transition
+    ></router-view>
   </div>
   <div v-else class="loader">
     <img class="logo" src="@/assets/Images/logo.png" />
@@ -52,10 +54,22 @@ export default {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap");
+
 body {
   margin: 0;
   font-family: "Source Sans Pro", sans-serif;
 }
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-out;
+}
+
 .loader {
   background-image: url("assets/Images/hero-banner.jpg");
   display: flex;
