@@ -312,7 +312,7 @@ export default {
       img {
         width: 100%;
         height: 300px;
-        object-fit: fill;
+        object-fit: contain;
       }
       @media (max-width: 700px) {
         margin-top: 20px;

@@ -1,7 +1,7 @@
 <template>
   <div class="list-item character grid left">
     <div v-show="display === 'grid'" class="list-item__image">
-      <img :src="imageLink" :alt="name" />
+      <img :src="imageLink" :alt="name" loading="lazy" />
     </div>
     <div class="list-item__body">
       <div class="list-item__title">

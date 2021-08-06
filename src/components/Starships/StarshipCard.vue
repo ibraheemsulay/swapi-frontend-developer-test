@@ -1,7 +1,7 @@
 <template>
   <div class="list-item starship grid top">
     <div v-show="display === 'grid'" class="list-item__image">
-      <img :src="imageLink" :alt="name" />
+      <img :src="imageLink" :alt="name" loading="lazy" />
     </div>
     <div
       class="list-item__body"
@@ -72,8 +72,7 @@ export default {
       position: relative;
 
       .list-item__image img {
-        max-width: 100%;
-        width: fit-content;
+        width: 100%;
         height: 200px;
         object-fit: cover;
       }

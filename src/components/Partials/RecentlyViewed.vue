@@ -80,8 +80,7 @@ export default {
       position: relative;
 
       .list-item__image img {
-        max-width: 100%;
-        width: fit-content;
+        width: 100%;
         height: 200px;
         object-fit: cover;
       }

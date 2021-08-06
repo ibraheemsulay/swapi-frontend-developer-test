@@ -1,6 +1,6 @@
 <template>
   <div class="list-item">
-    <img :src="imageLink" :alt="name" />
+    <img :src="imageLink" :alt="name" loading="lazy"/>
     <router-link
       @click="resetSearchBar"
       :to="{
