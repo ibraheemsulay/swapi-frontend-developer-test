@@ -63,6 +63,9 @@ export default {
 
       .list-item__image {
         min-height: 300px;
+        background-color: rgb(41, 41, 41);
+        width: 300px;
+
         img {
           height: 100%;
           width: 300px;
