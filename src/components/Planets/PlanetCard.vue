@@ -1,6 +1,6 @@
 <template>
   <div class="list-item">
-    <img :src="imageLink" :alt="name" loading="lazy"/>
+    <img :src="imageLink" :alt="name" loading="lazy" />
     <router-link
       @click="resetSearchBar"
       :to="{
@@ -48,6 +48,7 @@ export default {
     width: 100%;
     height: 100%;
     z-index: -1;
+    background: #949393b7;
   }
   a {
     position: absolute;
